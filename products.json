@@ -14,6 +14,12 @@
       "name": "rose",
       "price": "4-95",
       "image": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/DSC_0346.JPG"
+    },
+    {
+      "name": "yellow /rose",
+      "price": "4,95",
+      "image": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/DSC_0083.JPG",
+      "thumb": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/thumbs/thumb_DSC_0083.JPG"
     }
   ],
   "comic": [
