@@ -101,6 +101,12 @@
       "price": "4.95",
       "image": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/DSC_0160.JPG",
       "thumb": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/thumbs/DSC_0160.JPG"
+    },
+    {
+      "name": "red / black 2",
+      "price": "4.95",
+      "image": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/DSC_0161.JPG",
+      "thumb": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/thumbs/DSC_0161.JPG"
     }
   ],
   "comic": [],
