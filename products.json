@@ -11,6 +11,12 @@
       "price": "4.95",
       "image": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/DSC_0145.JPG",
       "thumb": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/thumbs/DSC_0145.JPG"
+    },
+    {
+      "name": "turquoise / white",
+      "price": "4.95",
+      "image": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/DSC_0146.JPG",
+      "thumb": "https://raw.githubusercontent.com/pfundbo81/products.json/main/images/thumbs/DSC_0146.JPG"
     }
   ],
   "comic": [],
