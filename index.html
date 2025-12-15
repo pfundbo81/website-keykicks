@@ -676,10 +676,11 @@ footer .copyright {
 /* ---------- Global Data & Cart Logic ---------- */
 let allProductsData = { sneaker: [], comic: [], other: [] };
 let cart = [];
-let checkoutData = { address: null, shipping: null, payment: null, total: 0 }; // NEUE globale Checkout-Daten
+let checkoutData = { address: null, shipping: null, payment: null, total: 0 }; 
 const CART_STORAGE_KEY = 'keykicksCart';
 const ESSENTIAL_CONSENT_KEY = 'keykicksEssentialConsentAcknowledged';
-const GITHUB_PRODUCTS_URL = 'const GITHUB_PRODUCTS_URL = 'https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json';
+// KORREKTUR: Verwenden der RAW-Daten-URL, um CORS/Pfad-Probleme zu vermeiden
+const GITHUB_PRODUCTS_URL = 'https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json';
 const PLACEHOLDER_IMG = "icons/placeholder.png";
 
 function loadCart() {
@@ -714,12 +715,12 @@ function addToCart(product) {
         
         if (fullProduct) {
              cart.push({
-                id: fullProduct.id,
-                name: fullProduct.name,
-                price: normalizePrice(fullProduct.price),
-                image: fullProduct.image || fullProduct.thumb,
-                quantity: 1
-            });
+                 id: fullProduct.id,
+                 name: fullProduct.name,
+                 price: normalizePrice(fullProduct.price),
+                 image: fullProduct.image || fullProduct.thumb,
+                 quantity: 1
+             });
         }
     }
 
@@ -896,7 +897,7 @@ document.getElementById('complete-order-btn').addEventListener('click', function
 
     // Simulation einer erfolgreichen Bestellung nach 2.5 Sekunden
     setTimeout(() => {
-        // Erfolgreiche Meldung
+        // Erfolg
         responseElement.style.color = 'green';
         responseElement.textContent = `🎉 Payment via ${checkoutData.payment} successful! Total: ${formatPrice(checkoutData.total)}`;
         
@@ -961,7 +962,8 @@ function closeShop() {
 /* ---------- JSON / product rendering ---------- */
 async function fetchProductsJson() {
     try {
-        const res = await fetch(`${GITHUB_PRODUCTS_URL}?v=${Date.now()}`, { cache: 'no-store' }); 
+        // KORRIGIERT: Keine Cache-Breaker mehr, da es eine reine JSON-Datei ist
+        const res = await fetch(GITHUB_PRODUCTS_URL, { cache: 'no-store' }); 
         if (!res.ok) throw new Error('GitHub JSON data unavailable or request failed.');
         const data = await res.json();
         
@@ -1029,6 +1031,7 @@ function renderSingleCategory(catName, items) {
 
 async function loadProducts() {
     allProductsData = await fetchProductsJson();
+    // Füllt die Container, damit die Suche funktioniert
     ['sneaker','comic','other'].forEach(cat => renderSingleCategory(cat, allProductsData[cat]));
 }
 
@@ -1049,9 +1052,17 @@ function openProductPopup(prod) {
     
     document.getElementById("popup-add").onclick = () => { addToCart(prod); };
     
+    // KORRIGIERT: Stellt sicher, dass das Close-Icon im Popup vorhanden ist
     if(!popup.querySelector('.popup-close')) {
-         popup.innerHTML = '<img src="icons/close.png" alt="Close" class="popup-close" onclick="closeProduct()">' + popup.innerHTML;
+         const closeImg = document.createElement('img');
+         closeImg.src = 'icons/close.png';
+         closeImg.alt = 'Close';
+         closeImg.className = 'popup-close';
+         closeImg.onclick = closeProduct;
+         // Fügt das Icon als ERSTES Kind hinzu
+         popup.insertBefore(closeImg, popup.firstChild);
     }
+
     popupBg.onclick = closeProduct;
 }
 function closeProduct() { document.getElementById("popup-bg").style.display = "none"; document.getElementById("product-popup").style.display = "none"; }
@@ -1103,8 +1114,9 @@ document.querySelector('.search-bar').addEventListener('submit', function(e){
     });
     
     if (!foundCategory && results.length > 0) {
-         results.forEach(prod => document.getElementById('sneaker-items').appendChild(createProductElement(prod)));
-         document.getElementById('sneaker-items').style.display = 'grid';
+          // Falls keine Kategorie gefunden, werden alle Ergebnisse in Sneaker-Container angezeigt
+          results.forEach(prod => document.getElementById('sneaker-items').appendChild(createProductElement(prod)));
+          document.getElementById('sneaker-items').style.display = 'grid';
     } else if (!foundCategory) {
         const container = document.getElementById('sneaker-items');
         container.style.display = 'grid';
@@ -1148,7 +1160,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e){
             form.reset(); 
             // reCAPTCHA zurücksetzen, falls es ein sichtbares Widget ist
             if (typeof grecaptcha !== 'undefined') {
-                grecaptcha.reset(); 
+                 grecaptcha.reset(); 
             }
             setTimeout(closeContactForm, 2000);
         } else {
@@ -1166,7 +1178,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e){
         console.error(err); 
          // reCAPTCHA zurücksetzen, falls es ein sichtbares Widget ist
         if (typeof grecaptcha !== 'undefined') {
-            grecaptcha.reset(); 
+             grecaptcha.reset(); 
         }
     });
 });
@@ -1212,10 +1224,17 @@ document.addEventListener('DOMContentLoaded', () => {
         showCookieBanner();
     }
     
+    // Prüft, ob das Close-Icon im Popup vorhanden ist (für den Fall, dass es manuell hinzugefügt wurde)
     const popup = document.getElementById("product-popup");
     if (!popup.querySelector('.popup-close')) {
-         popup.innerHTML = '<img src="icons/close.png" alt="Close" class="popup-close" onclick="closeProduct()">' + popup.innerHTML;
+         const closeImg = document.createElement('img');
+         closeImg.src = 'icons/close.png';
+         closeImg.alt = 'Close';
+         closeImg.className = 'popup-close';
+         closeImg.onclick = closeProduct;
+         popup.insertBefore(closeImg, popup.firstChild);
     }
+
     closeCart(); 
 });
 </script>
