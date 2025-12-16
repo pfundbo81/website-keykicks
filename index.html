@@ -473,8 +473,21 @@ line-height: 1.4;
 #notify-bar { position: fixed; top: 50%;
 right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 2000; writing-mode: vertical-rl; text-orientation: mixed; font-weight: bold;
 }
-#contact-form-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 10px; padding: 2rem;
-box-shadow: 0 0 20px rgba(0,0,0,0.3); z-index: 2001; width: 90%; max-width: 400px; }
+#contact-form-overlay { 
+    display: none; 
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    background: #fff; 
+    border-radius: 10px; 
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3); 
+    /* *** KORRIGIERTER Z-INDEX (von 2001 auf 3500) *** */
+    z-index: 3500; 
+    width: 90%; 
+    max-width: 400px; 
+}
 #contact-form-overlay h3 { margin-top: 0;
 }
 #contact-form-overlay form { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -1075,232 +1088,124 @@ function escapeHtml(s){ return String(s || '').replace(/[&<>"']/g, c => ({'&':'&
 function createProductElement(prod) {
     const div = document.createElement('div');
     div.className = 'item';
-    const name = escapeHtml(prod.name || 'Unnamed');
-const price = escapeHtml(prod.price || '');
-    
-    let imgUrl = String(prod.image || prod.thumb || '').trim();
-if (!imgUrl || imgUrl.startsWith("data:")) imgUrl = PLACEHOLDER_IMG;
-    
+    div.setAttribute('data-id', prod.id);
+    div.setAttribute('data-category', prod.category);
+    div.onclick = () => openProduct(prod);
+
     div.innerHTML = `
-        <img src="${escapeHtml(imgUrl)}" alt="${name}">
-        <div class="item-title">${name}</div>
-        <div class="item-price">${price}</div>
-        <button type="button" aria-label="Details for ${name}">View</button>
+        <img src="${escapeHtml(prod.image) || PLACEHOLDER_IMG}" alt="${escapeHtml(prod.name)}">
+        <div class="item-title"><b>${escapeHtml(prod.name)}</b></div>
+        <div class="item-price">${escapeHtml(prod.price)}</div>
+        <button onclick="event.stopPropagation(); addToCart(allProductsData['${prod.category}'].find(p => p.id === '${prod.id}'))">Add to Cart</button>
     `;
-div.querySelector("button").addEventListener("click", (e) => { 
-        e.stopPropagation(); 
-        openProductPopup(prod); 
-    });
-div.addEventListener("click", () => {
-        openProductPopup(prod);
-    });
-    
     return div;
 }
 
-/* Render Helper */
-function renderSingleCategory(catName, items) {
-    const container = document.getElementById(catName + '-items');
-    if (!container) return; 
-
-    container.innerHTML = ''; 
-    items.forEach(item => {
-        container.appendChild(createProductElement(item));
+function renderSingleCategory(category, products) {
+    const container = document.getElementById(category + '-items');
+    container.innerHTML = '';
+    products.forEach(product => {
+        container.appendChild(createProductElement(product));
     });
 }
 
-
-function loadProducts() {
-    fetchProductsJson().then(data => {
-        allProductsData = data;
-        
-        // Initiales Rendern der Produkte in den Shop-Overlays
-        Object.keys(allProductsData).forEach(cat => {
-            renderSingleCategory(cat, allProductsData[cat]);
-        });
-    });
+async function loadProducts() {
+    allProductsData = await fetchProductsJson();
+    // Rendert alle Kategorien initial, um sicherzustellen, dass sie einmal geladen sind
+    renderSingleCategory('sneaker', allProductsData.sneaker);
+    renderSingleCategory('comic', allProductsData.comic);
+    renderSingleCategory('other', allProductsData.other);
 }
 
-/* ---------- PRODUCT POPUP LOGIC ---------- */
-let currentProduct = null;
-
-function openProductPopup(product) {
-    currentProduct = product;
-    
+function openProduct(product) {
     const popup = document.getElementById('product-popup');
-    const bg = document.getElementById('popup-bg');
-    
-    let imgUrl = String(product.image || product.thumb || '').trim();
-    if (!imgUrl || imgUrl.startsWith("data:")) imgUrl = PLACEHOLDER_IMG;
+    document.getElementById('popup-bg').style.display = 'block';
 
-    document.getElementById('popup-img').src = escapeHtml(imgUrl);
-    document.getElementById('popup-title').textContent = escapeHtml(product.name || 'Product');
-    document.getElementById('popup-price').textContent = escapeHtml(product.price || '');
-    document.getElementById('popup-desc').textContent = escapeHtml(product.description || 'No description available.');
+    document.getElementById('popup-img').src = product.image || PLACEHOLDER_IMG;
+    document.getElementById('popup-img').alt = product.name;
+    document.getElementById('popup-title').textContent = product.name;
+    document.getElementById('popup-price').textContent = product.price;
+    document.getElementById('popup-desc').textContent = product.description || 'No description available.';
     
-    // Stellt sicher, dass das Close-Icon da ist (falls es nicht schon im HTML war)
-    if (!popup.querySelector('.popup-close')) {
-         const closeImg = document.createElement('img');
-         closeImg.src = 'icons/close.png';
-         closeImg.alt = 'Close';
-         closeImg.className = 'popup-close';
-         closeImg.onclick = closeProduct;
-         popup.prepend(closeImg);
-    }
-    
-    document.getElementById('popup-add').onclick = () => addToCart(product);
-    
-    bg.style.display = 'block';
+    // Updated den "Add to Cart" Button, um das korrekte Produkt hinzuzufügen
+    document.getElementById('popup-add').onclick = () => {
+        addToCart(product);
+    };
+
     popup.style.display = 'block';
 }
 
 function closeProduct() {
-    document.getElementById('popup-bg').style.display = 'none';
     document.getElementById('product-popup').style.display = 'none';
-    currentProduct = null;
-}
-
-/* ---------- SEARCH LOGIC ---------- */
-document.querySelector('.search-bar').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const query = this.querySelector('input[name="q"]').value.toLowerCase().trim();
-    if (!query) return;
-
-    let results = [];
-    Object.values(allProductsData).flat().forEach(product => {
-        const name = product.name ? product.name.toLowerCase() : '';
-        const desc = product.description ? product.description.toLowerCase() : '';
-        const cat = product.category ? product.category.toLowerCase() : '';
-
-        if (name.includes(query) || desc.includes(query) || cat.includes(query)) {
-            results.push(product);
-        }
-    });
-
-    // Öffne das Shop Overlay und zeige Suchergebnisse an
-    openShop('Search Results');
-    renderSearchResults(results, query);
-});
-
-function renderSearchResults(items, query) {
-    const container = document.getElementById('sneaker-items'); // Nutzt den ersten Container für Ergebnisse
-    const titleElement = document.getElementById('shop-title');
-
-    // Zeigt nur den ersten Container an
-    document.getElementById('sneaker-items').style.display = 'grid';
-    document.getElementById('comic-items').style.display = 'none';
-    document.getElementById('other-items').style.display = 'none';
-    
-    if (items.length === 0) {
-        titleElement.textContent = `No results for "${query}"`;
-        container.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; margin-top: 30px; font-size:1.1rem;">Please try a different search term.</p>';
-        return;
-    }
-
-    titleElement.textContent = `Search Results for "${query}" (${items.length})`;
-    container.innerHTML = '';
-    items.forEach(item => {
-        container.appendChild(createProductElement(item));
-    });
+    document.getElementById('popup-bg').style.display = 'none';
 }
 
 
-/* ---------- CONTACT / NOTIFY LOGIC ---------- */
-const notifyBar = document.getElementById('notify-bar');
-const contactOverlay = document.getElementById('contact-form-overlay');
-const contactForm = document.getElementById('contactForm');
-const formResponse = document.getElementById('form-response');
+/* ---------- NOTIFY FORM LOGIC ---------- */
 
-notifyBar.addEventListener('click', openContactForm);
+document.getElementById('notify-bar').addEventListener('click', openContactForm);
 
 function openContactForm() {
-    contactOverlay.style.display = 'block';
-    document.getElementById('popup-bg').style.display = 'block'; // Nutzt den Popup-Hintergrund
-    formResponse.textContent = '';
+    document.getElementById('contact-form-overlay').style.display = 'block';
+    // Wiederverwendung des allgemeinen Overlays, da es den höheren Z-Index hat
+    document.getElementById('popup-bg').style.display = 'block'; 
 }
 
 function closeContactForm() {
-    contactOverlay.style.display = 'none';
-    document.getElementById('popup-bg').style.display = 'none';
-    // Optional: Formular resetten
-    contactForm.reset(); 
-    // Setzt das reCAPTCHA zurück (wichtig!)
-    if (typeof grecaptcha !== 'undefined' && grecaptcha.getResponse().length !== 0) {
+    document.getElementById('contact-form-overlay').style.display = 'none';
+    document.getElementById('popup-bg').style.display = 'none'; 
+    document.getElementById('form-response').textContent = '';
+    // Optional: Formularfelder zurücksetzen
+    document.getElementById('contactForm').reset();
+    // reCAPTCHA zurücksetzen, falls geladen
+    if (typeof grecaptcha !== 'undefined') {
         grecaptcha.reset();
     }
 }
 
-contactForm.addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    // Client-seitige reCAPTCHA-Prüfung
-    const recaptchaResponse = grecaptcha.getResponse();
-    if (recaptchaResponse.length === 0) {
-        formResponse.style.color = 'red';
-        formResponse.textContent = 'Please complete the reCAPTCHA verification.';
-        return;
-    }
-
-    formResponse.style.color = '#333';
+    const formResponse = document.getElementById('form-response');
+    formResponse.style.color = 'orange';
     formResponse.textContent = 'Sending message...';
 
-    // *** ACHTUNG: Hier muss Ihr Google App Script URL eingefügt werden ***
-    // Da dies ein statischer GitHub-Code ist, kann ich das Backend nicht ausführen.
-    // Die folgende Funktion simuliert lediglich den Sendevorgang.
-    
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    console.log('Form data ready for backend (including optin field):', data);
-    
-    
-    // Hier würde die Fetch-Anfrage an das Google Script URL erfolgen (ersetzen Sie dies in der echten App)
-    /*
-    fetch('IHR_GOOGLE_APP_SCRIPT_URL', {
-        method: 'POST',
-        mode: 'no-cors', // Wichtig für Google Scripts
-        body: formData 
-    })
-    .then(response => { 
-        formResponse.style.color = 'green';
-        formResponse.textContent = 'Message sent successfully! Thank you for your interest.';
-        closeContactForm(); // Schließt das Formular bei Erfolg
-    })
-    .catch(error => {
+    // In einer echten Anwendung würden Sie hier AJAX verwenden, um die Daten an einen Server zu senden.
+    // Da dies ein statischer GitHub Pages Host ist, simulieren wir nur den Erfolg.
+
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
         formResponse.style.color = 'red';
-        formResponse.textContent = 'An error occurred while sending the message.';
-        console.error('Submit error:', error);
-    });
-    */
+        formResponse.textContent = 'Please complete the reCAPTCHA.';
+        return;
+    }
     
-    // *******************
-    // SIMULATION START
-    // *******************
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+    console.log('Contact form submitted with data:', data);
+    console.log('reCAPTCHA token:', recaptchaResponse);
+
     setTimeout(() => {
         formResponse.style.color = 'green';
-        formResponse.textContent = 'Message sent successfully! You will be notified about the launch.';
+        formResponse.textContent = 'Thank you for your message! We will get back to you shortly.';
         
-        // Nach kurzer Wartezeit schließen
-        setTimeout(closeContactForm, 1500); 
-
+        // Formular und reCAPTCHA zurücksetzen
+        e.target.reset();
+        grecaptcha.reset(); 
     }, 2000);
-    // *******************
-    // SIMULATION ENDE
-    // *******************
-    
 });
 
-/* ---------- COOKIE BANNER LOGIC ---------- */
-const banner = document.getElementById('essential-cookie-banner');
-const backdrop = document.getElementById('cookie-backdrop');
 
+/* ---------- COOKIE BANNER LOGIC ---------- */
 function showCookieBanner() {
-    banner.style.display = 'block';
-    backdrop.style.display = 'block';
-    document.body.style.overflow = 'hidden'; // Verhindert Scrollen im Hintergrund
+    document.getElementById('cookie-backdrop').style.display = 'block';
+    document.getElementById('essential-cookie-banner').style.display = 'block';
+    document.body.style.overflow = 'hidden'; 
 }
 
 function hideCookieBanner() {
     localStorage.setItem(ESSENTIAL_CONSENT_KEY, 'true');
+    const banner = document.getElementById('essential-cookie-banner');
+    const backdrop = document.getElementById('cookie-backdrop');
     banner.style.display = 'none';
     backdrop.style.display = 'none';
     document.body.style.overflow = 'auto'; 
@@ -1339,13 +1244,9 @@ document.addEventListener('DOMContentLoaded', () => {
          closeImg.onclick = closeProduct;
          popup.prepend(closeImg);
     }
-    
-    // Sicherstellen, dass das Close-Icon im Warenkorb das Warenkorb-Modal schließt
-    const cartCloseImg = document.querySelector('#cart-overlay .cart-close');
-    if (cartCloseImg) {
-        cartCloseImg.onclick = closeCart; 
-    }
 });
+
 </script>
+
 </body>
-</html>
+    </html>
