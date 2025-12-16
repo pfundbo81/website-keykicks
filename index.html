@@ -795,6 +795,7 @@ const CART_STORAGE_KEY = 'keykicksCart';
 const ESSENTIAL_CONSENT_KEY = 'keykicksEssentialConsentAcknowledged';
 const GITHUB_PRODUCTS_URL = 'https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json';
 const PLACEHOLDER_IMG = "icons/placeholder.png";
+const VERCEL_API_URL = 'https://website-keykicks.vercel.app/api/create-order'; // NEU
 
 
 function loadCart() {
@@ -995,33 +996,52 @@ document.getElementById('checkout-form-shipping-payment').addEventListener('subm
     // Go to Step 3
     openReviewModal(); 
 });
-// Step 3: Final Order
-document.getElementById('complete-order-btn').addEventListener('click', function() {
+// Step 3: Final Order (ECHTE ANBINDUNG AN VERCEL)
+document.getElementById('complete-order-btn').addEventListener('click', async function() {
     const responseElement = document.getElementById('checkout-response');
     responseElement.style.color = '#333';
-    responseElement.textContent = 'Processing simulated payment... Please wait.';
+    responseElement.textContent = 'Processing payment... Please wait.';
 
-    console.log('Final Order Data:', checkoutData);
+    // Das Payload-Objekt für Supabase vorbereiten
+    const orderPayload = {
+        address: checkoutData.address,
+        items: cart,
+        total: document.getElementById('review-total').textContent, // Nimmt den formatierten Preis
+        shippingMethod: checkoutData.shipping,
+        paymentMethod: checkoutData.payment
+    };
 
-    // Simulation of a successful order after 2.5 seconds
-    setTimeout(() => {
-        // Success
-        responseElement.style.color = 'green';
-        responseElement.textContent = `🎉 Payment via ${checkoutData.payment} successful! Total: ${formatPrice(checkoutData.total)}`;
-        
-    
-     // Final Reset
-        setTimeout(() => {
-            closeCheckoutModals();
-            alert('Order placed successfully! The cart has been reset.');
-            cart = []; 
-            saveCart();
-            renderCart();
-            checkoutData = 
-{ address: null, shipping: null, payment: null, total: 0 };
-        }, 1500);
+    try {
+        const response = await fetch(VERCEL_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderPayload)
+        });
 
-    }, 2500);
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            responseElement.style.color = 'green';
+            responseElement.textContent = `🎉 Order Successful! ID: ${result.orderId}`;
+            
+            // Erfolg: Warenkorb leeren
+            setTimeout(() => {
+                closeCheckoutModals();
+                alert('Thank you! Your order has been placed.');
+                cart = []; 
+                saveCart();
+                renderCart();
+                location.reload(); // Seite neu laden um alles zurückzusetzen
+            }, 2000);
+        } else {
+            responseElement.style.color = 'red';
+            responseElement.textContent = 'Error: ' + (result.message || 'Server error');
+        }
+    } catch (error) {
+        responseElement.style.color = 'red';
+        responseElement.textContent = 'Connection failed. Please try again.';
+        console.error('API Error:', error);
+    }
 });
 /* ---------- UI helpers / Product Logic ---------- */
 const scrollDown = document.querySelector('.scroll-down');
@@ -1359,4 +1379,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
     </html>
+
 
