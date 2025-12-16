@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Welcome to Keykicks</title>
 <style>
-/* ---------- Header Marquee (Höhe reduziert) ---------- */
+/* ---------- Header Marquee (Height reduced) ---------- */
 .header-marquee { flex-grow: 1;
 overflow: hidden; white-space: nowrap; position: relative; height: 100%; display: flex; align-items: center; margin: 0 20px; }
 .marquee-text { display: inline-block;
@@ -19,7 +19,7 @@ color: #222; overflow-x: hidden; }
 p { margin: 70px auto; padding: 0 135px; font-family: 'Roboto', sans-serif; font-size: 20px; line-height: 1.4;
 max-width: 1000px; }
 
-/* 🚀 KORRIGIERTER UND OPTIMIERTER HEADER CSS */
+/* 🚀 OPTIMIZED HEADER CSS */
 header {
     background-color: #111;
     color: #fff;
@@ -41,7 +41,7 @@ align-items: center;
     height: 100%;
 }
 
-/* Warenkorb Icon */
+/* Cart Icon */
 .header-left a img { 
     width: 20px; 
     height: 20px; 
@@ -55,7 +55,7 @@ cursor: pointer;
     opacity: 0.7;
 }
 
-/* Suchleiste kompakter */
+/* Search bar compact */
 .search-bar {
     display: flex;
     align-items: center;
@@ -183,7 +183,7 @@ left: 7px; width: 15px; height: 15px; cursor: pointer; }
 #popup-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%;
 background: rgba(0,0,0,0.55); z-index: 2500; display: none; }
 
-/* ZENTRIERUNG: Titel, Preis und Beschreibung */
+/* Center: Title, Price, and Description */
 #product-popup h3 { 
     margin: 0 0 0.4rem 0;
 font-size: 1.3rem;
@@ -195,7 +195,7 @@ font-size: 1.3rem;
 text-align: center; 
 }
 
-/* Button Zentrierung */
+/* Button Center */
 #product-popup #popup-add {
     display: block;
     max-width: 200px; 
@@ -274,7 +274,7 @@ border: none;
     padding: 0 5px;
 }
 .cart-item-controls input {
-    /* Füge Stil für das Mengenfeld im Warenkorb hinzu */
+    /* Style for the quantity field in the cart */
     width: 40px; 
     text-align: center; 
     padding: 4px;
@@ -333,7 +333,7 @@ background: #4CAF50;
 .empty-cart-message { text-align: center; color: #777; margin: 20px 0 !important;
 }
 
-/* ---------- CHECKOUT MODAL BASE STYLES (FÜR ALLE 3 SCHRITTE) ---------- */
+/* ---------- CHECKOUT MODAL BASE STYLES (FOR ALL 3 STEPS) ---------- */
 .checkout-step-modal {
     position: fixed;
     top: 50%;
@@ -369,7 +369,7 @@ cursor: pointer;
     opacity: 1;
 }
 
-/* Modal I (Adresse) */
+/* Modal I (Address) */
 #checkout-form-address input {
     padding: 10px;
     border: 1px solid #ccc;
@@ -452,11 +452,21 @@ padding: 12px;
     font-size: 0.9rem;
 line-height: 1.4;
 }
+#review-address {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    white-space: pre-wrap;
+    text-align: left;
+    font-size: 0.9rem;
+line-height: 1.4;
+}
 #complete-order-btn {
     width: 100%;
     padding: 15px;
     background: #007bff;
- /* Blau für "Kaufen" */
+ /* Blue for "Buy Now" */
     color: white;
     border: none;
     border-radius: 5px;
@@ -483,7 +493,7 @@ right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1
     border-radius: 10px; 
     padding: 2rem;
     box-shadow: 0 0 20px rgba(0,0,0,0.3); 
-    /* *** KORRIGIERTER Z-INDEX (von 2001 auf 3500) *** */
+    /* *** Z-INDEX for Contact Form (above cart) *** */
     z-index: 3500; 
     width: 90%; 
     max-width: 400px; 
@@ -493,7 +503,7 @@ right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1
 #contact-form-overlay form { display: flex; flex-direction: column; gap: 0.5rem; }
 #contact-form-overlay input, #contact-form-overlay textarea { padding: 0.5rem; border-radius: 5px;
 border: 1px solid #ccc; font-size: 1rem; width: 100%; }
-/* reCAPTCHA Widget Styling (optional, falls es sich verschiebt) */
+/* reCAPTCHA Widget Styling (optional) */
 #contact-form-overlay .g-recaptcha { margin-top: 10px;
 margin-bottom: 5px; } 
 
@@ -506,7 +516,7 @@ margin-bottom: 5px; }
 #contact-form-overlay .close-contact img:hover { opacity: 1;
 }
 
-/* --- ISOLIERTES COOKIE BANNER CSS --- */
+/* --- ISOLATED COOKIE BANNER CSS --- */
 #cookie-backdrop {
     position: fixed;
     top: 0;
@@ -626,11 +636,11 @@ class="overlay-image">
 
 <footer>
     <div class="links">
-        <a href="AGB.html">AGB</a>
+        <a href="AGB.html">Terms & Conditions</a>
 
-        <a href="delivery.html">Versandbedingungen</a>
-        <a href="privacy.html">Datenschutz</a>
-        <a href="#">Inhaber/Kontakt</a>
+        <a href="delivery.html">Shipping Policy</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="#">Owner/Contact</a>
  
     </div>
     <div class="copyright">© 2025 Keykicks – All Rights Reserved.</div>
@@ -675,7 +685,7 @@ id="cart-bg" onclick="closeCart()"></div>
 <div id="checkout-modal-address" class="checkout-step-modal">
     <img 
 src="icons/close.png" alt="Close" class="modal-close-btn" onclick="closeCheckoutModals()">
-    <h3>1. Delivery Address</h3>
+    <h3>1. Shipping Address</h3>
     <form id="checkout-form-address">
         <input type="email" name="email" placeholder="Email Address" required>
         <input type="text" name="firstName" placeholder="First Name" required>
@@ -766,9 +776,9 @@ src="icons/close.png" alt="Close" class="modal-close-btn" onclick="closeCheckout
         
         <div style="margin: 8px 0; font-size: 0.9rem;">
             <label for="newsletter-optin" style="display:flex; align-items:flex-start; cursor:pointer;">
-                <input type="checkbox" id="newsletter-optin" name="optin" required 
+                <input type="checkbox" id="newsletter-optin" name="optin"
                        style="width: auto; margin-top: 3px; margin-right: 8px;">
-                <span>Ja, ich möchte über den Launch von Keykicks und zukünftige Produkte informiert werden. Ich habe die <a href="privacy.html" target="_blank" style="color: #111; font-weight: bold;">Datenschutzbestimmungen</a> gelesen und stimme zu.</span>
+                <span>Yes, I would like to be informed about the launch of Keykicks and future products. I have read the <a href="privacy.html" target="_blank" style="color: #111; font-weight: bold;">Privacy Policy</a> and agree.</span>
             </label>
         </div>
         <div class="g-recaptcha" data-sitekey="6LdRciEsAAAAAHrPpLKwHuynngZorfdUbomed_mD"></div> 
@@ -781,9 +791,8 @@ type="submit" class="send-btn">Send</button>
 
 <div id="cookie-backdrop"></div>
 <div id="essential-cookie-banner">
-    <h3 style="margin-top: 0;
-font-size: 1.3rem;">Data Protection Information</h3>
-    <p>Wir verwenden ausschließlich essenzielle Cookies, die für die Kernfunktionalität des Shops notwendig sind.</p>
+    <h3>Data Protection Information</h3>
+    <p>We exclusively use essential cookies that are necessary for the core functionality of the shop.</p>
     <button id="accept-essential-cookies">I understand and confirm</button>
 </div>
 
@@ -794,7 +803,7 @@ let cart = [];
 let checkoutData = { address: null, shipping: null, payment: null, total: 0 }; 
 const CART_STORAGE_KEY = 'keykicksCart';
 const ESSENTIAL_CONSENT_KEY = 'keykicksEssentialConsentAcknowledged';
-// KORREKTUR: Verwenden der RAW-Daten-URL, um CORS/Pfad-Probleme zu vermeiden
+// CORRECTED: Using the RAW data URL to avoid CORS/path issues
 const GITHUB_PRODUCTS_URL = 'https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json';
 const PLACEHOLDER_IMG = "icons/placeholder.png";
 
@@ -898,7 +907,7 @@ totalElement.textContent = formatPrice(subtotal);
     countElement.textContent = itemCount;
 }
 
-/* ---------- CART / CHECKOUT MODAL STEUERUNG ---------- */
+/* ---------- CART / CHECKOUT MODAL CONTROL ---------- */
 function openCart() {
     document.getElementById('cart-bg').style.display = 'block';
 document.getElementById('cart-overlay').style.display = 'flex';
@@ -922,7 +931,7 @@ document.getElementById('checkout-response').textContent = '';
 function openAddressModal() {
     closeCart();
     closeCheckoutModals();
-// Stellt sicher, dass nur dieses Modal offen ist
+// Ensures only this modal is open
     document.getElementById('cart-bg').style.display = 'block';
     document.getElementById('checkout-modal-address').style.display = 'block';
 document.getElementById('cart-bg').onclick = closeCheckoutModals; 
@@ -968,27 +977,36 @@ cart.forEach(item => {
 
 /* ---------- CHECKOUT SUBMIT HANDLERS ---------- */
 
-// Step 1: Adressformular
+// Step 1: Address form
+document.getElementById('proceed-to-checkout-btn').addEventListener('click', () => {
+    if (cart.length > 0) {
+        openAddressModal(); 
+    } else {
+        alert('Your cart is empty. Please add items before checking out.');
+        closeCart();
+    }
+});
+
 document.getElementById('checkout-form-address').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const address = Object.fromEntries(formData.entries());
     checkoutData.address = address; 
 
-    // Gehe zu Step 2
+    // Go to Step 2
     openShippingPaymentModal(); 
 });
-// Step 2: Versand & Zahlung
+// Step 2: Shipping & Payment
 document.getElementById('checkout-form-shipping-payment').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     checkoutData.shipping = formData.get('shipping');
     checkoutData.payment = formData.get('payment');
 
-    // Gehe zu Step 3
+    // Go to Step 3
     openReviewModal(); 
 });
-// Step 3: Finale Bestellung
+// Step 3: Final Order
 document.getElementById('complete-order-btn').addEventListener('click', function() {
     const responseElement = document.getElementById('checkout-response');
     responseElement.style.color = '#333';
@@ -996,14 +1014,14 @@ document.getElementById('complete-order-btn').addEventListener('click', function
 
     console.log('Final Order Data:', checkoutData);
 
-    // Simulation einer erfolgreichen Bestellung nach 2.5 Sekunden
+    // Simulation of a successful order after 2.5 seconds
     setTimeout(() => {
-        // Erfolg
+        // Success
         responseElement.style.color = 'green';
         responseElement.textContent = `🎉 Payment via ${checkoutData.payment} successful! Total: ${formatPrice(checkoutData.total)}`;
         
     
-     // Finaler Reset
+     // Final Reset
         setTimeout(() => {
             closeCheckoutModals();
             alert('Order placed successfully! The cart has been reset.');
@@ -1055,7 +1073,7 @@ function closeShop() {
     document.getElementById('shop-overlay').style.display = 'none';
 document.getElementById('shop-overlay').setAttribute('aria-hidden','true');
     
-    // Setzt die Ansicht aller Produktkategorien auf den initialen Zustand zurück
+    // Reset view of all product categories to initial state
     ['sneaker','comic','other'].forEach(cat => renderSingleCategory(cat, allProductsData[cat]));
 }
 
@@ -1063,7 +1081,7 @@ document.getElementById('shop-overlay').setAttribute('aria-hidden','true');
 /* ---------- JSON / product rendering ---------- */
 async function fetchProductsJson() {
     try {
-        // KORRIGIERT: Keine Cache-Breaker mehr, da es eine reine JSON-Datei ist
+        // CORRECTED: No cache-breakers anymore, as it's a pure JSON file
         const res = await fetch(GITHUB_PRODUCTS_URL, { cache: 'no-store' });
 if (!res.ok) throw new Error('GitHub JSON data unavailable or request failed.');
         const data = await res.json();
@@ -1111,7 +1129,7 @@ function renderSingleCategory(category, products) {
 
 async function loadProducts() {
     allProductsData = await fetchProductsJson();
-    // Rendert alle Kategorien initial, um sicherzustellen, dass sie einmal geladen sind
+    // Renders all categories initially to ensure they are loaded once
     renderSingleCategory('sneaker', allProductsData.sneaker);
     renderSingleCategory('comic', allProductsData.comic);
     renderSingleCategory('other', allProductsData.other);
@@ -1127,7 +1145,7 @@ function openProduct(product) {
     document.getElementById('popup-price').textContent = product.price;
     document.getElementById('popup-desc').textContent = product.description || 'No description available.';
     
-    // Updated den "Add to Cart" Button, um das korrekte Produkt hinzuzufügen
+    // Updates the "Add to Cart" button to add the correct product
     document.getElementById('popup-add').onclick = () => {
         addToCart(product);
     };
@@ -1147,7 +1165,7 @@ document.getElementById('notify-bar').addEventListener('click', openContactForm)
 
 function openContactForm() {
     document.getElementById('contact-form-overlay').style.display = 'block';
-    // Wiederverwendung des allgemeinen Overlays, da es den höheren Z-Index hat
+    // Reuse the general overlay since it has the higher z-index
     document.getElementById('popup-bg').style.display = 'block'; 
 }
 
@@ -1155,9 +1173,9 @@ function closeContactForm() {
     document.getElementById('contact-form-overlay').style.display = 'none';
     document.getElementById('popup-bg').style.display = 'none'; 
     document.getElementById('form-response').textContent = '';
-    // Optional: Formularfelder zurücksetzen
+    // Optional: Reset form fields
     document.getElementById('contactForm').reset();
-    // reCAPTCHA zurücksetzen, falls geladen
+    // Reset reCAPTCHA, if loaded
     if (typeof grecaptcha !== 'undefined') {
         grecaptcha.reset();
     }
@@ -1169,8 +1187,8 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     formResponse.style.color = 'orange';
     formResponse.textContent = 'Sending message...';
 
-    // In einer echten Anwendung würden Sie hier AJAX verwenden, um die Daten an einen Server zu senden.
-    // Da dies ein statischer GitHub Pages Host ist, simulieren wir nur den Erfolg.
+    // In a real application, you would use AJAX here to send the data to a server.
+    // Since this is a static GitHub Pages host, we only simulate success.
 
     const recaptchaResponse = grecaptcha.getResponse();
     if (!recaptchaResponse) {
@@ -1188,7 +1206,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         formResponse.style.color = 'green';
         formResponse.textContent = 'Thank you for your message! We will get back to you shortly.';
         
-        // Formular und reCAPTCHA zurücksetzen
+        // Reset form and reCAPTCHA
         e.target.reset();
         grecaptcha.reset(); 
     }, 2000);
@@ -1213,16 +1231,17 @@ function hideCookieBanner() {
 
 document.getElementById('accept-essential-cookies').addEventListener('click', hideCookieBanner);
 
-/* ---------- INITIALISIERUNG ---------- */
+/* ---------- INITIALIZATION ---------- */
 document.addEventListener('DOMContentLoaded', () => { 
     loadCart();
     loadProducts(); 
     
+    // Event listener for the "Proceed to Checkout" button
     const checkoutBtn = document.getElementById('proceed-to-checkout-btn');
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', () => {
             if (cart.length > 0) {
-                openAddressModal(); // Ruft den ersten Checkout-Schritt auf
+                openAddressModal(); 
             } else {
                 alert('Your cart is empty. Please add items before checking out.');
                 closeCart();
@@ -1234,7 +1253,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showCookieBanner();
     }
     
-    // Prüft, ob das Close-Icon im Popup vorhanden ist (für den Fall, dass es manuell hinzugefügt wurde)
+    // Check if the close icon is present in the popup (in case it was added manually)
     const popup = document.getElementById("product-popup");
     if (!popup.querySelector('.popup-close')) {
          const closeImg = document.createElement('img');
@@ -1249,4 +1268,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 </body>
-    </html>
+        </html>
