@@ -452,16 +452,6 @@ padding: 12px;
     font-size: 0.9rem;
 line-height: 1.4;
 }
-#review-address {
-    background: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    white-space: pre-wrap;
-    text-align: left;
-    font-size: 0.9rem;
-line-height: 1.4;
-}
 #complete-order-btn {
     width: 100%;
     padding: 15px;
@@ -469,7 +459,7 @@ line-height: 1.4;
  /* Blue for "Buy Now" */
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 5-px;
     margin-top: 20px;
     cursor: pointer;
     font-size: 1.2rem;
@@ -605,8 +595,8 @@ title="Cart"><img src="icons/shopping-cart.png" alt="Cart Icon"></a>
     </div>
 
     <div class="header-right">
-        <form class="search-bar">
-            <input type="text" name="q" placeholder="Search article..." required>
+        <form class="search-bar" id="searchForm">
+            <input type="text" id="searchInput" name="q" placeholder="Search article..." required>
             <button type="submit">Search</button>
         </form>
     </div>
@@ -651,7 +641,7 @@ class="overlay-image">
     <div class="shop-header">
         <div class="shop-title" id="shop-title">Shop</div>
     </div>
-    <div id="sneaker-items" class="shop-content" aria-live="polite"></div>
+    <div id="sneaker-items" class="shop-content" aria-live="polite" style="display:none;"></div>
     <div id="comic-items" class="shop-content" aria-live="polite" style="display:none;"></div>
     <div id="other-items" class="shop-content" aria-live="polite" style="display:none;"></div>
 </div>
@@ -803,7 +793,6 @@ let cart = [];
 let checkoutData = { address: null, shipping: null, payment: null, total: 0 }; 
 const CART_STORAGE_KEY = 'keykicksCart';
 const ESSENTIAL_CONSENT_KEY = 'keykicksEssentialConsentAcknowledged';
-// CORRECTED: Using the RAW data URL to avoid CORS/path issues
 const GITHUB_PRODUCTS_URL = 'https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json';
 const PLACEHOLDER_IMG = "icons/placeholder.png";
 
@@ -1055,33 +1044,52 @@ function openShop(category) {
     overlay.style.display = 'flex';
 overlay.setAttribute('aria-hidden','false');
     
-    if(category){
-        document.getElementById('shop-title').textContent = category.charAt(0).toUpperCase() + category.slice(1) + ' Shop';
-['sneaker','comic','other'].forEach(cat => {
-            if (cat === category) {
-                document.getElementById(cat + '-items').style.display = 'grid';
+    // Setzt den Titel und stellt sicher, dass alle Kategorien auf 'none' stehen, außer der gewünschten
+    document.getElementById('shop-title').textContent = category.charAt(0).toUpperCase() + category.slice(1) + ' Shop';
+    
+    ['sneaker','comic','other'].forEach(cat => {
+        const container = document.getElementById(cat + '-items');
+        if (cat === category) {
+            container.style.display = 'grid';
+            // Nur beim ersten Öffnen rendern oder wenn der Container leer ist
+            if (container.children.length === 0) { 
                 renderSingleCategory(cat, allProductsData[cat]); 
-            } else {
-                document.getElementById(cat + '-items').style.display = 'none';
-          
-}
-        });
-    }
+            }
+            // Sicherstellen, dass alle Artikel der gewählten Kategorie sichtbar sind (falls die Suche sie versteckt hat)
+            Array.from(container.children).forEach(itemElement => {
+                itemElement.style.display = 'flex'; 
+            });
+        } else {
+            container.style.display = 'none';
+        }
+    });
 }
 
 function closeShop() {
     document.getElementById('shop-overlay').style.display = 'none';
-document.getElementById('shop-overlay').setAttribute('aria-hidden','true');
+    document.getElementById('shop-overlay').setAttribute('aria-hidden','true');
     
-    // Reset view of all product categories to initial state
-    ['sneaker','comic','other'].forEach(cat => renderSingleCategory(cat, allProductsData[cat]));
+    // --- RESET DER ARTIKEL-SICHTBARKEIT ---
+    document.getElementById('shop-title').textContent = 'Shop';
+    
+    ['sneaker', 'comic', 'other'].forEach(category => {
+        const container = document.getElementById(category + '-items');
+        
+        // 1. Verstecke den gesamten Kategorie-Container
+        container.style.display = 'none';
+        
+        // 2. Stelle sicher, dass ALLE Produkte in diesem Container wieder sichtbar sind, 
+        // falls der Filter sie ausgeblendet hatte (wichtig für das nächste Öffnen über Kategorie-Link).
+        Array.from(container.children).forEach(itemElement => {
+            itemElement.style.display = 'flex'; 
+        });
+    });
 }
 
 
 /* ---------- JSON / product rendering ---------- */
 async function fetchProductsJson() {
     try {
-        // CORRECTED: No cache-breakers anymore, as it's a pure JSON file
         const res = await fetch(GITHUB_PRODUCTS_URL, { cache: 'no-store' });
 if (!res.ok) throw new Error('GitHub JSON data unavailable or request failed.');
         const data = await res.json();
@@ -1108,6 +1116,8 @@ function createProductElement(prod) {
     div.className = 'item';
     div.setAttribute('data-id', prod.id);
     div.setAttribute('data-category', prod.category);
+    // Initial auf flex setzen, wird von filterProducts bei Bedarf ausgeblendet
+    div.style.display = 'flex'; 
     div.onclick = () => openProduct(prod);
 
     div.innerHTML = `
@@ -1121,6 +1131,10 @@ function createProductElement(prod) {
 
 function renderSingleCategory(category, products) {
     const container = document.getElementById(category + '-items');
+    // Verhindern, dass Produkte mehrmals gerendert werden, wenn filterProducts aufgerufen wird
+    // Wichtig: Beim initialen Laden ist der Container leer und muss gerendert werden.
+    if (container.children.length > 0) return; 
+    
     container.innerHTML = '';
     products.forEach(product => {
         container.appendChild(createProductElement(product));
@@ -1129,7 +1143,7 @@ function renderSingleCategory(category, products) {
 
 async function loadProducts() {
     allProductsData = await fetchProductsJson();
-    // Renders all categories initially to ensure they are loaded once
+    // Alle Produkte einmalig rendern, damit sie für die Suchfunktion im DOM sind
     renderSingleCategory('sneaker', allProductsData.sneaker);
     renderSingleCategory('comic', allProductsData.comic);
     renderSingleCategory('other', allProductsData.other);
@@ -1231,10 +1245,86 @@ function hideCookieBanner() {
 
 document.getElementById('accept-essential-cookies').addEventListener('click', hideCookieBanner);
 
+
+/* ---------- VERBESSERTE SUCHE/FILTER-LOGIK (FEHLERBEHEBUNG) ---------- */
+
+function filterProducts(query) {
+    const normalizedQuery = query.toLowerCase().trim();
+    const shopOverlay = document.getElementById('shop-overlay');
+    let totalMatches = 0;
+    
+    // 1. Shop-Overlay öffnen
+    if (shopOverlay.style.display !== 'flex') {
+        shopOverlay.style.display = 'flex';
+        shopOverlay.setAttribute('aria-hidden', 'false');
+    }
+    document.getElementById('shop-title').textContent = normalizedQuery ? `Search Results for "${query}"` : 'Shop';
+
+    // 2. Iteriere durch alle Kategorie-Container
+    ['sneaker', 'comic', 'other'].forEach(category => {
+        const container = document.getElementById(category + '-items');
+        const products = allProductsData[category];
+        
+        // **WICHTIGE PRÜFUNG:** Stellen Sie sicher, dass Produkte gerendert wurden.
+        // Falls das initiale Laden noch nicht abgeschlossen war, rendern wir sie jetzt.
+        if (container.children.length === 0 && products.length > 0) {
+            renderSingleCategory(category, products); 
+        }
+        
+        // Alle Container auf "grid" setzen, um alle Ergebnisse anzuzeigen
+        container.style.display = 'grid';
+        let categoryMatches = 0;
+        
+        // 3. Einzelne Elemente filtern (Name ODER Beschreibung)
+        // Wir verwenden die DOM-Elemente direkt für das Filtern der Sichtbarkeit.
+        Array.from(container.children).forEach(itemElement => {
+            const prodId = itemElement.getAttribute('data-id');
+            // Suche das Produkt im globalen Datenobjekt
+            const product = products.find(p => p.id === prodId);
+
+            if (product) {
+                const productName = product.name.toLowerCase();
+                const productDesc = (product.description || '').toLowerCase(); 
+                
+                // FILTERBEDINGUNG: Prüfe Name ODER Beschreibung
+                const isMatch = productName.includes(normalizedQuery) || productDesc.includes(normalizedQuery);
+
+                if (isMatch || normalizedQuery === '') {
+                    itemElement.style.display = 'flex'; // Element anzeigen
+                    categoryMatches++;
+                } else {
+                    itemElement.style.display = 'none'; // Element verstecken
+                }
+            }
+        });
+        
+        // Zähle die Gesamttreffer
+        totalMatches += categoryMatches;
+        
+        // Wenn in einer Kategorie keine Treffer gefunden wurden UND eine Suche aktiv ist, blende den Container aus.
+        if (categoryMatches === 0 && normalizedQuery !== '') {
+            container.style.display = 'none';
+        }
+    });
+    
+    // Feedback, wenn keine Treffer gefunden wurden
+    if (totalMatches === 0 && normalizedQuery !== '') {
+         document.getElementById('shop-title').textContent = `No Results for "${query}"`;
+    }
+}
+
+// Event Listener für das Suchformular, um die Seitenaktualisierung zu verhindern
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // **WICHTIG:** Verhindert das Neuladen der Seite
+    const query = document.getElementById('searchInput').value;
+    filterProducts(query);
+});
+
+
 /* ---------- INITIALIZATION ---------- */
 document.addEventListener('DOMContentLoaded', () => { 
     loadCart();
-    loadProducts(); 
+    loadProducts(); // Stellt sicher, dass die Produkte geladen und gerendert werden.
     
     // Event listener for the "Proceed to Checkout" button
     const checkoutBtn = document.getElementById('proceed-to-checkout-btn');
