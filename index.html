@@ -371,7 +371,6 @@ async function loadProducts() {
             comic: data.comic.map((p, i) => ({...p, id: `c-${i}`, category: 'comic'})),
             other: data.other.map((p, i) => ({...p, id: `o-${i}`, category: 'other'}))
         };
-        // Render all once for search availability
         renderAllCategories();
     } catch(err) { console.error('Error loading products:', err); }
 }
@@ -468,67 +467,4 @@ document.getElementById('checkout-form-address').onsubmit = (e) => {
 document.getElementById('checkout-form-shipping-payment').onsubmit = (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
-    checkoutData.shipping = fd.get('shipping');
-    checkoutData.payment = fd.get('payment');
-    document.getElementById('checkout-modal-shipping-payment').style.display='none';
-    document.getElementById('checkout-modal-review').style.display='block';
-    renderReview();
-};
-
-function renderReview() {
-    const sub = cart.reduce((s, i) => s + (i.priceNum * i.quantity), 0);
-    const ship = parseFloat(checkoutData.shipping);
-    document.getElementById('review-address').textContent = `${checkoutData.address.firstName} ${checkoutData.address.lastName}\n${checkoutData.address.street}\n${checkoutData.address.zip} ${checkoutData.address.city}`;
-    document.getElementById('review-subtotal').textContent = '€' + sub.toFixed(2).replace('.',',');
-    document.getElementById('review-shipping').textContent = '€' + ship.toFixed(2).replace('.',',');
-    document.getElementById('review-total').textContent = '€' + (sub + ship).toFixed(2).replace('.',',');
-}
-
-document.getElementById('complete-order-btn').onclick = () => {
-    const res = document.getElementById('checkout-response');
-    res.textContent = "Processing...";
-    setTimeout(() => {
-        res.innerHTML = "🎉 Order Successful!";
-        setTimeout(() => { cart = []; localStorage.removeItem('keykicksCart'); location.reload(); }, 2000);
-    }, 2000);
-};
-
-/* ---------- Search ---------- */
-document.getElementById('searchForm').onsubmit = (e) => {
-    e.preventDefault();
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    openShop('sneaker'); // Opens overlay
-    document.getElementById('shop-title').textContent = `Results for "${q}"`;
-    ['sneaker','comic','other'].forEach(cat => {
-        const cont = document.getElementById(cat + '-items');
-        cont.style.display = 'grid';
-        let matches = 0;
-        Array.from(cont.children).forEach(el => {
-            const prod = allProductsData[cat].find(p => p.id === el.getAttribute('data-id'));
-            const isMatch = prod.name.toLowerCase().includes(q) || (prod.description || '').toLowerCase().includes(q);
-            el.style.display = isMatch ? 'flex' : 'none';
-            if(isMatch) matches++;
-        });
-        if(matches === 0) cont.style.display = 'none';
-    });
-};
-
-/* ---------- Initialization ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-    loadProducts();
-    if(localStorage.getItem('keykicksEssentialConsentAcknowledged') !== 'true') {
-        document.getElementById('cookie-backdrop').style.display='block';
-        document.getElementById('essential-cookie-banner').style.display='block';
-    }
-});
-document.getElementById('accept-essential-cookies').onclick = () => {
-    localStorage.setItem('keykicksEssentialConsentAcknowledged', 'true');
-    document.getElementById('cookie-backdrop').style.display='none';
-    document.getElementById('essential-cookie-banner').style.display='none';
-};
-document.getElementById('notify-bar').onclick = () => { document.getElementById('contact-form-overlay').style.display='block'; document.getElementById('popup-bg').style.display='block'; };
-function closeContactForm() { document.getElementById('contact-form-overlay').style.display='none'; document.getElementById('popup-bg').style.display='none'; }
-function scrollToEnd() { window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); }
-</script>
-</body>
-</html>
+    check
