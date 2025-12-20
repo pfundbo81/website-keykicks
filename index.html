@@ -5,79 +5,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Welcome to Keykicks</title>
 <style>
-/* ---------- Header Marquee ---------- */
+/* ---------- Header Marquee (Original aus keykicks-online.html) ---------- */
 .header-marquee { flex-grow: 1; overflow: hidden; white-space: nowrap; position: relative; height: 100%; display: flex; align-items: center; margin: 0 20px; }
 .marquee-text { display: inline-block; padding-left: 100%; color: #fff; font-size: 0.85rem; letter-spacing: 1px; animation: marqueeScroll 12s linear infinite; }
 @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-/* ---------- global ---------- */
+/* ---------- Global Styling ---------- */
 body { margin: 0; font-family: Arial, sans-serif; background-color: #fff; color: #222; overflow-x: hidden; }
-p { margin: 70px auto; padding: 0 135px; font-family: 'Roboto', sans-serif; font-size: 20px; line-height: 1.4; max-width: 1000px; }
-
-/* 🚀 HEADER */
 header { background-color: #111; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; height: 40px; width: 100%; box-sizing: border-box; position: relative; z-index: 1000; }
 .header-left, .header-right { display: flex; align-items: center; gap: 10px; height: 100%; }
-.header-left a img { width: 20px; height: 20px; filter: invert(1); cursor: pointer; display: block; }
-.search-bar { display: flex; align-items: center; margin: 0; height: 26px; }
-.search-bar input[type="text"] { padding: 0 8px; border-radius: 4px 0 0 4px; border: none; outline: none; font-size: 0.85rem; height: 100%; width: 120px; }
-.search-bar button { background-color: #fff; color: #111; border: none; padding: 0 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; font-size: 0.85rem; height: 100%; }
+.header-left a img { width: 20px; height: 20px; filter: invert(1); cursor: pointer; }
+.search-bar { display: flex; align-items: center; height: 26px; }
+.search-bar input { padding: 0 8px; border-radius: 4px 0 0 4px; border: none; font-size: 0.85rem; height: 100%; width: 120px; }
+.search-bar button { background-color: #fff; color: #111; border: none; padding: 0 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; height: 100%; }
 
-/* Video Section */
-.video-section { width: 100%; height: calc(85vh - 45px); background-color: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+/* Video & Categories */
+.video-section { width: 100%; height: calc(85vh - 45px); background-color: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 .video-section video { width: 100%; height: 100%; object-fit: cover; }
-.overlay-image { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 50%; height: auto; pointer-events: none; }
-
-main { padding: 2rem; max-width: 1000px; margin: 0 auto; }
-.scroll-down { text-align: center; cursor: pointer; margin-top: -1rem; margin-bottom: 1rem; }
-.scroll-down img { width: 60px; height: auto; animation: bounce 1.5s infinite; }
-@keyframes bounce { 0%,20%,50%,80%,100% { transform: translateY(0); } 40% { transform: translateY(10px); } 60% { transform: translateY(5px); } }
-
-.categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 50px; }
-.category { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; cursor:pointer; display:flex; flex-direction:column; align-items:center; transition: transform 0.3s ease; }
+.overlay-image { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 50%; pointer-events: none; }
+.categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; padding: 2rem; max-width: 1000px; margin: 0 auto; }
+.category { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); cursor: pointer; overflow: hidden; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s; }
 .category:hover { transform: translateY(-5px); }
-.category img { width: 100%; height: 180px; object-fit: contain; padding: 5px; }
-.category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; width:100%; }
+.category img { width: 100%; height: 160px; object-fit: contain; padding: 10px; }
+.category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; width: 100%; }
 
-/* ---------- SHOP OVERLAY ---------- */
-.shop-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: none; flex-direction: column; overflow-y: auto; z-index: 2000; padding: 2rem; box-sizing: border-box; }
-.shop-header { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
-.shop-title { font-size:1.3rem; font-weight:700; flex-grow:1; text-align:center; }
-.shop-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
-.item { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; cursor: pointer; display:flex; flex-direction:column; align-items:center; padding-bottom:10px; }
-.item img { width: 100%; height: 150px; object-fit: contain; padding: 5px; }
-.item button { background: #111; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-.close-btn { position: absolute; top: 15px; left: 25px; width: 25px; cursor: pointer; z-index: 2001; }
+/* ---------- ORIGINAL CART OVERLAY STYLE ---------- */
+#cart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 4000; display: none; }
+#cart-overlay { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 450px; background: #fff; padding: 20px; border-radius: 10px; z-index: 5000; display: none; max-height: 80vh; overflow-y: auto; flex-direction: column; }
+.cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+.cart-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; gap: 15px; }
+.cart-item img { width: 60px; height: 60px; object-fit: contain; border-radius: 5px; }
+.cart-item-details { flex-grow: 1; }
+.cart-item-details h4 { margin: 0; font-size: 1rem; }
+.cart-item-details p { margin: 5px 0 0; color: #555; font-size: 0.9rem; }
+.cart-summary { margin-top: 15px; padding-top: 15px; border-top: 2px solid #eee; font-weight: bold; }
 
-/* ---------- NOTIFY BAR & CONTACT ---------- */
-#notify-bar { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 1500; writing-mode: vertical-rl; text-orientation: mixed; font-weight: bold; }
+/* Notify & Forms */
+#notify-bar { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 2000; writing-mode: vertical-rl; text-orientation: mixed; font-weight: bold; }
 #contact-form-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 10px; padding: 2rem; box-shadow: 0 0 20px rgba(0,0,0,0.3); z-index: 3500; width: 90%; max-width: 400px; }
-#contact-form-overlay form { display: flex; flex-direction: column; gap: 0.8rem; }
-#contact-form-overlay input, #contact-form-overlay textarea { padding: 0.6rem; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box; }
-.close-contact { position: absolute; top: 10px; left: 10px; cursor: pointer; width: 20px; }
-
-/* ---------- CART & CHECKOUT ---------- */
-#cart-bg, #popup-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2500; display: none; }
-#cart-overlay, .checkout-step-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 450px; background: #fff; padding: 20px; border-radius: 10px; z-index: 5000; display: none; max-height: 85vh; overflow-y: auto; }
-.checkout-btn { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 5px; margin-top: 15px; cursor: pointer; font-weight: bold; }
-.checkout-step-modal input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-
-/* ---------- PRODUCT POPUP ---------- */
-#product-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 420px; background: #fff; padding: 1.5rem; border-radius: 12px; z-index: 3000; display: none; }
-.popup-close { position: absolute; top: 10px; right: 10px; width: 18px; cursor: pointer; }
-
-@media (max-width: 640px) { p { padding: 0 20px; font-size: 16px; } .header-marquee { display: none; } }
+.send-btn { background: #111; color: #fff; border: none; padding: 0.8rem; cursor: pointer; border-radius: 5px; width: 100%; font-weight: bold; margin-top: 10px; }
+.shop-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1500; display: none; flex-direction: column; padding: 2rem; overflow-y: auto; }
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 
 <header>
-    <div class="header-left"><a href="#" onclick="openCart(); return false;"><img src="icons/shopping-cart.png" alt="Cart"></a></div>
-    <div class="header-marquee"><div class="marquee-text">This Site is under development. No orders possible. Please click "Notify me" for updates.</div></div>
+    <div class="header-left">
+        <a href="#" onclick="openCart(); return false;"><img src="icons/shopping-cart.png" alt="Cart"></a>
+    </div>
+    <div class="header-marquee">
+        <div class="marquee-text">This Site is under development. No orders possible. Please click the "Notify me button" to stay updated.</div>
+    </div>
     <div class="header-right">
         <form class="search-bar" id="searchForm">
-            <input type="text" id="searchInput" placeholder="Search..." required>
-            <button type="submit">Go</button>
+            <input type="text" id="searchInput" placeholder="Search article..." required>
+            <button type="submit">Search</button>
         </form>
     </div>
 </header>
@@ -88,8 +71,7 @@ main { padding: 2rem; max-width: 1000px; margin: 0 auto; }
 </section>
 
 <main>
-    <div class="scroll-down" onclick="scrollToEnd()"><img src="icons/arrow.png" alt="Scroll"></div>
-    <p><b>Keykicks</b> fills the niche of stylish keychains created with a love for detail...</p>
+    <p style="text-align:center; padding: 2rem;"><b>Keykicks</b> offers stylish keychains inspired by sneakers and comics. Perfect for your daily style.</p>
     <div class="categories">
         <div class="category" onclick="openShop('sneaker')"><img src="icons/sneakers.png"><div class="category-title">Sneaker</div></div>
         <div class="category" onclick="openShop('comic')"><img src="icons/theater.png"><div class="category-title">Comic</div></div>
@@ -98,177 +80,109 @@ main { padding: 2rem; max-width: 1000px; margin: 0 auto; }
 </main>
 
 <div id="shop-overlay" class="shop-overlay">
-    <img src="icons/close.png" class="close-btn" onclick="closeShop()">
-    <div class="shop-header"><div class="shop-title" id="shop-title">Shop</div></div>
-    <div id="sneaker-items" class="shop-content"></div>
-    <div id="comic-items" class="shop-content"></div>
-    <div id="other-items" class="shop-content"></div>
-</div>
-
-<div id="notify-bar" onclick="openContact()">Notify me</div>
-<div id="contact-form-overlay">
-    <img src="icons/close.png" class="close-contact" onclick="closeContact()">
-    <h3>Contact Us</h3>
-    <form id="contactForm">
-        <input type="text" name="name" placeholder="Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
-        <div class="g-recaptcha" data-sitekey="6LdRciEsAAAAAHrPpLKwHuynngZorfdUbomed_mD"></div>
-        <button type="submit" class="checkout-btn">Send</button>
-    </form>
+    <img src="icons/close.png" style="width:25px; cursor:pointer;" onclick="closeShop()">
+    <h2 id="shop-title" style="text-align:center;">Shop</h2>
+    <div id="shop-items-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1.5rem;"></div>
 </div>
 
 <div id="cart-bg" onclick="closeCart()"></div>
 <div id="cart-overlay">
-    <h3>Shopping Cart</h3>
-    <div id="cart-items-container"></div>
-    <div style="font-weight:bold; margin-top:10px;">Total: <span id="cart-total">0,00€</span></div>
-    <button class="checkout-btn" onclick="startCheckout()">Proceed to Checkout</button>
+    <div class="cart-header">
+        <h3>Your Cart</h3>
+        <img src="icons/close.png" style="width:18px; cursor:pointer;" onclick="closeCart()">
+    </div>
+    <div id="cart-items-list"></div>
+    <div class="cart-summary">
+        <div style="display:flex; justify-content:space-between;">
+            <span>Total:</span>
+            <span id="cart-total-price">0,00€</span>
+        </div>
+        <button class="send-btn" style="background:#28a745;">Proceed to Checkout</button>
+    </div>
 </div>
 
-<div id="checkout-modal-address" class="checkout-step-modal">
-    <h3>1. Shipping Address</h3>
-    <input type="text" id="co-name" placeholder="Full Name">
-    <input type="text" id="co-street" placeholder="Street & House No.">
-    <input type="text" id="co-city" placeholder="City">
-    <input type="text" id="co-zip" placeholder="ZIP Code">
-    <button class="checkout-btn" onclick="openShippingPayment()">Next: Shipping & Payment</button>
-</div>
-
-<div id="checkout-modal-shipping" class="checkout-step-modal">
-    <h3>2. Shipping & Payment</h3>
-    <p>Standard Shipping (4,99€)</p>
-    <p>Payment: PayPal / Credit Card</p>
-    <button class="checkout-btn" onclick="openReview()">Next: Review</button>
-</div>
-
-<div id="checkout-modal-review" class="checkout-step-modal">
-    <h3>3. Review Order</h3>
-    <div id="order-summary"></div>
-    <button class="checkout-btn" onclick="location.reload()">Complete Order (Demo)</button>
-</div>
-
-<div id="popup-bg" onclick="closeAll()"></div>
-<div id="product-popup">
-    <img src="icons/close.png" class="popup-close" onclick="closeAll()">
-    <img id="popup-img" src="" style="width:100%; height:200px; object-fit:contain;">
-    <h3 id="popup-title" style="text-align:center;"></h3>
-    <p id="popup-price" style="text-align:center; font-weight:bold;"></p>
-    <button class="checkout-btn" id="popup-add">Add to Cart</button>
+<div id="notify-bar" onclick="openContact()">Notify me</div>
+<div id="contact-form-overlay">
+    <img src="icons/close.png" style="width:20px; cursor:pointer; margin-bottom:10px;" onclick="closeContact()">
+    <h3>Stay Updated</h3>
+    <form id="contactForm">
+        <input type="text" placeholder="Name" style="width:100%; margin-bottom:10px; padding:8px;" required>
+        <input type="email" placeholder="Email" style="width:100%; margin-bottom:10px; padding:8px;" required>
+        <textarea placeholder="Message" style="width:100%; margin-bottom:10px; padding:8px;" rows="4" required></textarea>
+        <div class="g-recaptcha" data-sitekey="6LdRciEsAAAAAHrPpLKwHuynngZorfdUbomed_mD"></div>
+        <button type="submit" class="send-btn">Send</button>
+    </form>
 </div>
 
 <script>
-/* ---------- SHOP LOGIC ---------- */
-let cart = JSON.parse(localStorage.getItem('keykicksCart')) || [];
-let allProductsData = { sneaker: [], comic: [], other: [] };
-const DATA_URL = 'https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json';
+let cart = [];
+let products = { sneaker: [], comic: [], other: [] };
 
 async function loadProducts() {
     try {
-        const res = await fetch(DATA_URL);
-        const data = await res.json();
-        allProductsData = {
-            sneaker: data.sneaker.map((p, i) => ({...p, id: `s-${i}`, category: 'sneaker'})),
-            comic: data.comic.map((p, i) => ({...p, id: `c-${i}`, category: 'comic'})),
-            other: data.other.map((p, i) => ({...p, id: `o-${i}`, category: 'other'}))
-        };
-        ['sneaker','comic','other'].forEach(cat => renderCategory(cat));
-    } catch(e) { console.error("Error loading products", e); }
-}
-
-function renderCategory(cat) {
-    const cont = document.getElementById(cat + '-items');
-    cont.innerHTML = '';
-    allProductsData[cat].forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'item';
-        div.onclick = () => openProduct(p);
-        div.innerHTML = `<img src="${p.image}"><b>${p.name}</b><br>${p.price}<button onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})">Add to Cart</button>`;
-        cont.appendChild(div);
-    });
+        const res = await fetch('https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json');
+        products = await res.json();
+    } catch (e) { console.error("Could not load products", e); }
 }
 
 function openShop(cat) {
+    const container = document.getElementById('shop-items-container');
+    container.innerHTML = '';
+    document.getElementById('shop-title').innerText = cat.toUpperCase();
+    products[cat].forEach(p => {
+        const div = document.createElement('div');
+        div.style = "border:1px solid #eee; padding:10px; text-align:center; border-radius:10px;";
+        div.innerHTML = `<img src="${p.image}" style="width:100%; height:120px; object-fit:contain;">
+                         <h4>${p.name}</h4><p>${p.price}</p>
+                         <button onclick="addToCart('${p.name}', '${p.price}', '${p.image}')" style="background:#111; color:#fff; border:none; padding:5px 10px; cursor:pointer; border-radius:5px;">Add</button>`;
+        container.appendChild(div);
+    });
     document.getElementById('shop-overlay').style.display = 'flex';
-    document.getElementById('shop-title').textContent = cat.toUpperCase() + ' SHOP';
-    ['sneaker','comic','other'].forEach(c => document.getElementById(c + '-items').style.display = (c === cat ? 'grid' : 'none'));
 }
 
-function openProduct(p) {
-    document.getElementById('popup-bg').style.display = 'block';
-    document.getElementById('product-popup').style.display = 'block';
-    document.getElementById('popup-img').src = p.image;
-    document.getElementById('popup-title').textContent = p.name;
-    document.getElementById('popup-price').textContent = p.price;
-    document.getElementById('popup-add').onclick = () => addToCart(p);
-}
-
-/* ---------- CART & CHECKOUT ---------- */
-function addToCart(p) {
-    const priceNum = parseFloat(p.price.replace('€','').replace(',','.'));
-    cart.push({...p, priceNum});
-    localStorage.setItem('keykicksCart', JSON.stringify(cart));
+function addToCart(name, price, img) {
+    cart.push({name, price, img});
     renderCart();
-    closeAll();
     openCart();
 }
 
 function renderCart() {
-    const cont = document.getElementById('cart-items-container');
-    cont.innerHTML = cart.length ? '' : 'Cart is empty.';
+    const list = document.getElementById('cart-items-list');
+    list.innerHTML = cart.length === 0 ? '<p style="text-align:center;">Empty</p>' : '';
     let total = 0;
-    cart.forEach((item, idx) => {
-        total += item.priceNum;
-        cont.innerHTML += `<div style="display:flex; justify-content:space-between; padding:5px; border-bottom:1px solid #eee;">${item.name} <span>${item.price}</span> <button onclick="remove(${idx})">x</button></div>`;
+    cart.forEach((item, index) => {
+        total += parseFloat(item.price.replace('€','').replace(',','.'));
+        list.innerHTML += `
+            <div class="cart-item">
+                <img src="${item.img}">
+                <div class="cart-item-details">
+                    <h4>${item.name}</h4>
+                    <p>${item.price}</p>
+                </div>
+                <span onclick="cart.splice(${index},1); renderCart();" style="color:red; cursor:pointer; font-weight:bold;">X</span>
+            </div>`;
     });
-    document.getElementById('cart-total').textContent = total.toFixed(2) + '€';
+    document.getElementById('cart-total-price').innerText = total.toFixed(2).replace('.', ',') + '€';
 }
 
-function remove(idx) { cart.splice(idx, 1); localStorage.setItem('keykicksCart', JSON.stringify(cart)); renderCart(); }
-
-function startCheckout() {
-    if(cart.length === 0) return alert("Empty Cart!");
-    closeCart();
-    document.getElementById('cart-bg').style.display = 'block';
-    document.getElementById('checkout-modal-address').style.display = 'block';
-}
-
-function openShippingPayment() {
-    document.getElementById('checkout-modal-address').style.display = 'none';
-    document.getElementById('checkout-modal-shipping').style.display = 'block';
-}
-
-function openReview() {
-    document.getElementById('checkout-modal-shipping').style.display = 'none';
-    document.getElementById('checkout-modal-review').style.display = 'block';
-    document.getElementById('order-summary').innerHTML = `<p>Shipping to: ${document.getElementById('co-name').value}</p><p>Total items: ${cart.length}</p>`;
-}
-
-/* ---------- UI HELPERS ---------- */
-function openContact() { document.getElementById('contact-form-overlay').style.display = 'block'; document.getElementById('popup-bg').style.display = 'block'; }
-function closeContact() { document.getElementById('contact-form-overlay').style.display = 'none'; document.getElementById('popup-bg').style.display = 'none'; }
-function openCart() { document.getElementById('cart-bg').style.display = 'block'; document.getElementById('cart-overlay').style.display = 'flex'; }
-function closeCart() { document.getElementById('cart-bg').style.display = 'none'; document.getElementById('cart-overlay').style.display = 'none'; }
-function closeShop() { document.getElementById('shop-overlay').style.display = 'none'; }
-function closeAll() {
-    document.querySelectorAll('.checkout-step-modal').forEach(m => m.style.display = 'none');
-    document.getElementById('popup-bg').style.display = 'none';
-    document.getElementById('product-popup').style.display = 'none';
-    document.getElementById('cart-bg').style.display = 'none';
-}
-function scrollToEnd() { window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); }
-
-/* ---------- SEARCH ---------- */
-document.getElementById('searchForm').onsubmit = (e) => {
+// Contact Form Logic
+document.getElementById('contactForm').onsubmit = function(e) {
     e.preventDefault();
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    openShop('sneaker'); // Wechsle in den Shop-Modus
-    document.querySelectorAll('.item').forEach(el => {
-        el.style.display = el.innerText.toLowerCase().includes(q) ? 'flex' : 'none';
-    });
+    if (grecaptcha.getResponse() === "") {
+        alert("Please complete the Captcha.");
+    } else {
+        alert("Thank you! You will be notified.");
+        closeContact();
+    }
 };
 
-document.addEventListener('DOMContentLoaded', loadProducts);
+function openCart() { document.getElementById('cart-bg').style.display = 'block'; document.getElementById('cart-overlay').style.display = 'flex'; }
+function closeCart() { document.getElementById('cart-bg').style.display = 'none'; document.getElementById('cart-overlay').style.display = 'none'; }
+function openContact() { document.getElementById('contact-form-overlay').style.display = 'block'; }
+function closeContact() { document.getElementById('contact-form-overlay').style.display = 'none'; }
+function closeShop() { document.getElementById('shop-overlay').style.display = 'none'; }
+
+loadProducts();
 </script>
 </body>
 </html>
