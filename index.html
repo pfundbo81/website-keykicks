@@ -451,7 +451,6 @@ function openShop(cat) {
     document.getElementById('sneaker-items').style.display = (cat === 'sneaker') ? 'grid' : 'none';
     document.getElementById('comic-items').style.display = (cat === 'comic') ? 'grid' : 'none';
     document.getElementById('other-items').style.display = (cat === 'other') ? 'grid' : 'none';
-});
 }
 function closeShop() { document.getElementById('shop-overlay').style.display='none'; }
 
@@ -485,5 +484,6 @@ document.getElementById('checkout-form-shipping-payment').onsubmit = (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
     check
+
 
 
