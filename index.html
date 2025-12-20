@@ -1,66 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Welcome to Keykicks</title>
 <style>
-/* ---------- DESIGN & LAYOUT ---------- */
+/* ---------------------------------------------------- */
+/* CSS AUS DEINER SICHERUNGSKOPIE (DESIGN-ERHALT)       */
+/* ---------------------------------------------------- */
 body { margin: 0; font-family: Arial, sans-serif; background-color: #fff; color: #222; overflow-x: hidden; }
-header { background-color: #111; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; height: 40px; width: 100%; box-sizing: border-box; position: relative; z-index: 1000; }
+
+/* Globaler p-Selektor für den Haupttext */
+p { margin: 70px auto; padding: 0 135px; font-family: 'Roboto', sans-serif; font-size: 20px; line-height: 1.4; max-width: 1000px; }
+
+header {
+    background-color: #111;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1000;
+}
+
 .header-marquee { flex-grow: 1; overflow: hidden; white-space: nowrap; position: relative; height: 100%; display: flex; align-items: center; margin: 0 20px; }
 .marquee-text { display: inline-block; padding-left: 100%; color: #fff; font-size: 0.85rem; letter-spacing: 1px; animation: marqueeScroll 12s linear infinite; }
 @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
 .header-left, .header-right { display: flex; align-items: center; gap: 10px; height: 100%; }
-.header-left a img { width: 20px; height: 20px; filter: invert(1); cursor: pointer; display: block; }
+.header-left a img { width: 20px; height: 20px; filter: invert(1); transition: opacity 0.3s; cursor: pointer; display: block; }
+
 .search-bar { display: flex; align-items: center; height: 26px; }
-.search-bar input[type="text"] { padding: 0 8px; border-radius: 4px 0 0 4px; border: none; outline: none; font-size: 0.85rem; height: 100%; width: 120px; }
-.search-bar button { background-color: #fff; color: #111; border: none; padding: 0 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; height: 100%; font-size: 0.85rem; }
+.search-bar input { padding: 0 8px; border-radius: 4px 0 0 4px; border: none; outline: none; font-size: 0.85rem; height: 100%; width: 120px; }
+.search-bar button { background-color: #fff; color: #111; border: none; padding: 0 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; height: 100%; }
 
 .video-section { width: 100%; height: calc(85vh - 45px); background-color: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
 .video-section video { width: 100%; height: 100%; object-fit: cover; }
 .overlay-image { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 50%; height: auto; pointer-events: none; }
 
-main { padding: 2rem; max-width: 1000px; margin: 0 auto; text-align: center; }
-p.intro-text { margin: 70px auto; font-family: 'Roboto', sans-serif; font-size: 20px; line-height: 1.4; text-align: center; max-width: 1000px; }
-
-.scroll-down { text-align: center; cursor: pointer; margin-top: -1rem; margin-bottom: 2rem; }
-.scroll-down img { width: 60px; height: auto; animation: bounce 1.5s infinite; opacity: 0.9; }
-@keyframes bounce { 0%,20%,50%,80%,100% { transform: translateY(0); } 40% { transform: translateY(10px); } 60% { transform: translateY(5px); } }
-
+main { padding: 2rem; max-width: 1000px; margin: 0 auto; }
 .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 50px; }
-.category { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; text-decoration: none; color: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: 0.3s ease; }
-.category img { width: 100%; height: 160px; object-fit: contain; padding: 10px; }
-.category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; font-size: 1.1rem; width: 100%; }
+.category { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; text-decoration: none; color: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s ease; }
+.category:hover { transform: translateY(-5px); }
+.category img { width: 100%; height: 180px; object-fit: contain; padding: 5px; }
+.category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; width: 100%; font-weight: bold; }
 
-/* ---------- SHOP OVERLAY (DER FEHLENDE TEIL) ---------- */
-.shop-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: none; flex-direction: column; overflow-y: auto; z-index: 2000; padding: 2rem; box-sizing: border-box; }
-.shop-header { display: flex; align-items: center; margin-bottom: 2rem; position: relative; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
-.shop-title { font-size: 1.8rem; font-weight: bold; width: 100%; text-align: center; }
-.close-btn { position: absolute; top: 0; left: 0; width: 30px; cursor: pointer; }
-.shop-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2rem; padding: 1rem 0; }
+/* ---------- NOTIFY BAR & CONTACT OVERLAY ---------- */
+#notify-bar { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 2000; writing-mode: vertical-rl; text-orientation: mixed; font-weight: bold; border-radius: 5px 0 0 5px; }
+#popup-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 4500; display: none; }
+#contact-form-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 10px; padding: 25px; box-shadow: 0 0 30px rgba(0,0,0,0.5); z-index: 5000; width: 90%; max-width: 400px; }
+#contact-form-overlay form { display: flex; flex-direction: column; gap: 12px; }
+#contact-form-overlay input, #contact-form-overlay textarea { padding: 12px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box; }
+.close-btn { cursor: pointer; width: 25px; margin-bottom: 10px; }
+.send-btn { background: #111; color: #fff; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; }
 
-.product-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; align-items: center; transition: 0.3s; }
-.product-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-.product-card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 10px; cursor: pointer; }
-.product-card h4 { margin: 10px 0 5px; font-size: 1.1rem; }
-.product-card .price { font-weight: bold; color: #111; margin-bottom: 10px; }
-.add-to-cart-btn { background: #111; color: #fff; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; width: 100%; }
+/* ---------- SHOP OVERLAY ---------- */
+#shop-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: none; flex-direction: column; overflow-y: auto; z-index: 4000; padding: 2rem; box-sizing: border-box; }
+.shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
+.item-card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.item-card img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 10px; }
 
-/* Warenkorb & Checkout Styles */
-#cart-bg, #popup-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2500; display: none; }
-#cart-overlay { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 450px; background: #fff; padding: 20px; border-radius: 10px; z-index: 3000; display: none; flex-direction: column; max-height: 80vh; overflow-y: auto; }
-.checkout-step-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 500px; background: #fff; padding: 25px; border-radius: 10px; z-index: 4000; display: none; }
-
-/* Notify & Forms */
-#notify-bar { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 1000; writing-mode: vertical-rl; font-weight: bold; }
-#contact-form-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 10px; padding: 2rem; z-index: 3500; width: 90%; max-width: 400px; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
-
-footer { padding: 2rem; max-width: 1000px; margin: 0 auto; border-top: 1px solid #eee; text-align: left; }
-footer .links { display: flex; flex-direction: column; gap: 0.5rem; }
-footer .links a { color: #111; text-decoration: none; font-weight: bold; }
-footer .copyright { margin-top: 2rem; text-align: center; color: #777; font-size: 0.9rem; }
+/* Cookie Banner */
+#cookie-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9998; display: none; }
+#essential-cookie-banner { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 400px; background: #fff; padding: 20px; z-index: 9999; display: none; border-radius: 10px; text-align: center; }
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
@@ -68,14 +74,14 @@ footer .copyright { margin-top: 2rem; text-align: center; color: #777; font-size
 
 <header>
     <div class="header-left">
-        <a href="#" onclick="openCart(); return false;"><img src="icons/shopping-cart.png" alt="Cart"></a>
+        <a href="#" onclick="alert('Warenkorb-Funktion wird geladen...'); return false;"><img src="icons/shopping-cart.png" alt="Cart"></a>
     </div>
     <div class="header-marquee">
         <div class="marquee-text">This Site is under development. No orders possible. Please click the "Notify me button" to stay updated.</div>
     </div>
     <div class="header-right">
-        <form class="search-bar" id="searchForm">
-            <input type="text" id="searchInput" placeholder="Search article..." required>
+        <form class="search-bar" onsubmit="event.preventDefault();">
+            <input type="text" id="searchInput" placeholder="Search...">
             <button type="submit">Search</button>
         </form>
     </div>
@@ -87,8 +93,7 @@ footer .copyright { margin-top: 2rem; text-align: center; color: #777; font-size
 </section>
 
 <main>
-    <div class="scroll-down" onclick="scrollToEnd()"><img src="icons/arrow.png" alt="Scroll Down"></div>
-    <p class="intro-text"><b>Keykicks</b> fills the niche of stylish keychains created with a love for detail... <br><b>Grab your daily eye-catcher!</b></p>
+    <p><b>Keykicks</b> fills the niche of stylish keychains created with a love for detail. High-quality materials and unique designs make our products more than just accessories. <b>Grab your daily eye-catcher!</b></p>
     
     <div class="categories">
         <div class="category" onclick="openShop('sneaker')">
@@ -106,121 +111,115 @@ footer .copyright { margin-top: 2rem; text-align: center; color: #777; font-size
     </div>
 </main>
 
-<div id="shop-overlay" class="shop-overlay">
-    <div class="shop-header">
-        <img src="icons/close.png" class="close-btn" onclick="closeShop()">
-        <div class="shop-title" id="shop-title">Shop</div>
-    </div>
-    <div id="sneaker-items" class="shop-content"></div>
-    <div id="comic-items" class="shop-content"></div>
-    <div id="other-items" class="shop-content"></div>
-</div>
-
-<div id="cart-bg" onclick="closeCart()"></div>
-<div id="cart-overlay">
-    <h3>Shopping Cart</h3>
-    <div id="cart-items-container"></div>
-    <p>Total: <span id="cart-total">€0.00</span></p>
-    <button onclick="alert('Simulation: Proceeding to Checkout...')" class="add-to-cart-btn">Checkout</button>
-</div>
-
-<div id="notify-bar" onclick="document.getElementById('contact-form-overlay').style.display='block';">Notify me</div>
+<div id="notify-bar" onclick="openContact()">Notify me</div>
+<div id="popup-bg" onclick="closeContact()"></div>
 <div id="contact-form-overlay">
-    <h3>Contact & Notify</h3>
-    <form id="contactForm">
-        <input type="email" placeholder="Your Email" required style="width:100%; margin-bottom:10px; padding:8px;">
+    <img src="icons/close.png" class="close-btn" onclick="closeContact()" alt="Close">
+    <h3 style="margin-top:0; text-align:center;">Stay Updated</h3>
+    
+    <form id="contact-form" action="https://formspree.io/f/xknabpze" method="POST">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+        
         <div class="g-recaptcha" data-sitekey="6LdRciEsAAAAAHrPpLKwHuynngZorfdUbomed_mD"></div>
-        <button type="submit" class="add-to-cart-btn" style="margin-top:10px;">Send</button>
-        <button type="button" onclick="this.parentElement.parentElement.style.display='none';" style="background:none; border:none; color:red; cursor:pointer; width:100%; margin-top:5px;">Close</button>
+        
+        <button type="submit" class="send-btn">Send Message</button>
     </form>
 </div>
 
-<footer>
-    <div class="links">
-        <a href="AGB.html">Terms & Conditions</a>
-        <a href="delivery.html">Shipping Policy</a>
-        <a href="privacy.html">Privacy Policy</a>
-    </div>
-    <div class="copyright">© 2025 Keykicks – All Rights Reserved.</div>
-</footer>
+<div id="shop-overlay">
+    <img src="icons/close.png" class="close-btn" style="position:absolute; top:20px; left:20px;" onclick="closeShop()">
+    <h2 id="shop-title" style="text-align:center;">Shop</h2>
+    <div id="shop-container" class="shop-grid"></div>
+</div>
+
+<div id="cookie-backdrop"></div>
+<div id="essential-cookie-banner">
+    <h3>Data Protection</h3>
+    <p>We use essential cookies to ensure the basic functions of the website.</p>
+    <button onclick="acceptCookies()" class="send-btn">I understand</button>
+</div>
 
 <script>
-let allProductsData = { sneaker: [], comic: [], other: [] };
-let cart = [];
+/* ---------------------------------------------------- */
+/* BACKEND-LOGIK: PRODUKTE & WARENKORB                  */
+/* ---------------------------------------------------- */
+let allProducts = { sneaker: [], comic: [], other: [] };
 
+// Produkte von GitHub laden
 async function loadProducts() {
     try {
-        const res = await fetch('https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json', { cache: 'no-store' });
-        const data = await res.json();
-        allProductsData = {
-            sneaker: data.sneaker.map((p, i) => ({...p, id: `s-${i}`})),
-            comic: data.comic.map((p, i) => ({...p, id: `c-${i}`})),
-            other: data.other.map((p, i) => ({...p, id: `o-${i}`}))
-        };
-        renderAll();
-    } catch(e) { console.error("Error loading products", e); }
+        const response = await fetch('https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json');
+        allProducts = await response.json();
+    } catch (error) {
+        console.error("Fehler beim Laden der Produkte von GitHub:", error);
+    }
 }
 
-function renderAll() {
-    ['sneaker', 'comic', 'other'].forEach(cat => {
-        const cont = document.getElementById(cat + '-items');
-        if(!cont) return;
-        cont.innerHTML = allProductsData[cat].map(p => `
-            <div class="product-card" data-id="${p.id}">
-                <img src="${p.image}" alt="${p.name}">
-                <h4>${p.name}</h4>
-                <div class="price">${p.price}</div>
-                <button class="add-to-cart-btn" onclick="addToCart('${p.id}', '${cat}')">Add to Cart</button>
-            </div>
-        `).join('');
-    });
-}
+// Shop öffnen und Produkte der Kategorie anzeigen
+function openShop(category) {
+    const container = document.getElementById('shop-container');
+    const title = document.getElementById('shop-title');
+    title.innerText = category.charAt(0).toUpperCase() + category.slice(1);
+    container.innerHTML = "";
 
-function openShop(cat) {
-    document.getElementById('shop-overlay').style.display = 'flex';
-    document.getElementById('shop-title').textContent = cat.charAt(0).toUpperCase() + cat.slice(1) + ' Shop';
-    
-    document.getElementById('sneaker-items').style.display = (cat === 'sneaker') ? 'grid' : 'none';
-    document.getElementById('comic-items').style.display = (cat === 'comic') ? 'grid' : 'none';
-    document.getElementById('other-items').style.display = (cat === 'other') ? 'grid' : 'none';
-}
-
-function closeShop() {
-    document.getElementById('shop-overlay').style.display = 'none';
-    document.getElementById('searchInput').value = '';
-    // Alle Filter zurücksetzen
-    ['sneaker', 'comic', 'other'].forEach(cat => {
-        const cont = document.getElementById(cat + '-items');
-        Array.from(cont.children).forEach(el => el.style.display = 'flex');
-    });
-}
-
-/* --- SUCHE --- */
-document.getElementById('searchForm').onsubmit = (e) => {
-    e.preventDefault();
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    document.getElementById('shop-overlay').style.display = 'flex';
-    document.getElementById('shop-title').textContent = `Search: ${q}`;
-    
-    ['sneaker', 'comic', 'other'].forEach(cat => {
-        const cont = document.getElementById(cat + '-items');
-        cont.style.display = 'grid'; 
-        let foundAny = false;
-        Array.from(cont.children).forEach(el => {
-            const product = allProductsData[cat].find(p => p.id === el.getAttribute('data-id'));
-            const match = product.name.toLowerCase().includes(q);
-            el.style.display = match ? 'flex' : 'none';
-            if(match) foundAny = true;
+    if (allProducts[category]) {
+        allProducts[category].forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h4>${product.name}</h4>
+                <p>${product.price}</p>
+                <button class="send-btn" onclick="addToCart('${product.name}')">Add to Cart</button>
+            `;
+            container.appendChild(card);
         });
-        if(!foundAny) cont.style.display = 'none';
-    });
+    }
+    document.getElementById('shop-overlay').style.display = "flex";
+}
+
+function closeShop() { document.getElementById('shop-overlay').style.display = "none"; }
+
+function addToCart(name) {
+    alert(name + " wurde zum Warenkorb hinzugefügt!");
+}
+
+/* ---------------------------------------------------- */
+/* KONTAKTFORMULAR & COOKIES                            */
+/* ---------------------------------------------------- */
+function openContact() {
+    document.getElementById('contact-form-overlay').style.display = "block";
+    document.getElementById('popup-bg').style.display = "block";
+}
+
+function closeContact() {
+    document.getElementById('contact-form-overlay').style.display = "none";
+    document.getElementById('popup-bg').style.display = "none";
+}
+
+function acceptCookies() {
+    localStorage.setItem('keykicksEssentialConsentAcknowledged', 'true');
+    document.getElementById('cookie-backdrop').style.display = 'none';
+    document.getElementById('essential-cookie-banner').style.display = 'none';
+}
+
+window.onload = function() {
+    loadProducts();
+    if(localStorage.getItem('keykicksEssentialConsentAcknowledged') !== 'true') {
+        document.getElementById('cookie-backdrop').style.display = 'block';
+        document.getElementById('essential-cookie-banner').style.display = 'block';
+    }
 };
 
-function openCart() { document.getElementById('cart-bg').style.display='block'; document.getElementById('cart-overlay').style.display='flex'; }
-function closeCart() { document.getElementById('cart-bg').style.display='none'; document.getElementById('cart-overlay').style.display='none'; }
-function scrollToEnd() { window.scrollTo({ top: 800, behavior: "smooth" }); }
-
-window.onload = loadProducts;
+// Schließen mit ESC-Taste
+document.addEventListener('keydown', (e) => {
+    if (e.key === "Escape") {
+        closeContact();
+        closeShop();
+    }
+});
 </script>
 </body>
 </html>
