@@ -254,9 +254,21 @@ right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1
     <div class="scroll-down" onclick="scrollToEnd()"><img src="icons/arrow.png" alt="Scroll Down"></div>
     <p><b>Keykicks</b> fills the niche of stylish keychains created with a love for detail... <b>Grab your daily eye-catcher!</b></p>
     <div class="categories">
-        <a class="category" id="open-sneaker"><img src="icons/sneakers.png" alt="Sneaker"><div class="category-title">Sneaker</div></a>
-        <a class="category" id="open-comic"><img src="icons/theater.png" alt="Comic"><div class="category-title">Comic</div></a>
-        <a class="category" id="open-other"><img src="icons/others.png" alt="Other"><div class="category-title">Other</div></a>
+    <a class="category" onclick="openShop('sneaker')">
+        <img src="icons/sneakers.png" alt="Sneaker">
+        <div class="category-title">Sneaker</div>
+    </a>
+    
+    <a class="category" onclick="openShop('comic')">
+        <img src="icons/theater.png" alt="Comic">
+        <div class="category-title">Comic</div>
+    </a>
+    
+    <a class="category" onclick="openShop('other')">
+        <img src="icons/others.png" alt="Other">
+        <div class="category-title">Other</div>
+    </a>
+</div>
     </div>
 </main>
 
@@ -468,3 +480,4 @@ document.getElementById('checkout-form-shipping-payment').onsubmit = (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
     check
+
