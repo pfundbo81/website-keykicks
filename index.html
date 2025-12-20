@@ -209,10 +209,12 @@ background: rgba(0,0,0,0.55); z-index: 2500; display: none; }
 #notify-bar { position: fixed; top: 50%;
 right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 2000; writing-mode: vertical-rl; text-orientation: mixed; font-weight: bold;
 }
-#contact-form-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 10px; padding: 2rem; box-shadow: 0 0 20px rgba(0,0,0,0.3); z-index: 3500; width: 90%; max-width: 400px; }
+#contact-form-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 10px; padding: 2.5rem 2rem 2rem 2rem; box-shadow: 0 0 20px rgba(0,0,0,0.3); z-index: 3500; width: 90%; max-width: 400px; }
 #contact-form-overlay form { display: flex; flex-direction: column; gap: 0.5rem; }
 #contact-form-overlay input, #contact-form-overlay textarea { padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; }
-.close-contact { position: absolute; top: 7px; left: 10px; cursor: pointer; }
+
+.close-contact { position: absolute; top: 12px; left: 12px; cursor: pointer; width: 18px; height: 18px; z-index: 3600; }
+.close-contact img { width: 100%; height: 100%; display: block; }
 
 /* ---------- cookie banner ---------- */
 #cookie-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9998; display: none; }
@@ -371,7 +373,6 @@ async function loadProducts() {
             comic: data.comic.map((p, i) => ({...p, id: `c-${i}`, category: 'comic'})),
             other: data.other.map((p, i) => ({...p, id: `o-${i}`, category: 'other'}))
         };
-        // Render all once for search availability
         renderAllCategories();
     } catch(err) { console.error('Error loading products:', err); }
 }
@@ -497,7 +498,7 @@ document.getElementById('complete-order-btn').onclick = () => {
 document.getElementById('searchForm').onsubmit = (e) => {
     e.preventDefault();
     const q = document.getElementById('searchInput').value.toLowerCase();
-    openShop('sneaker'); // Opens overlay
+    openShop('sneaker'); 
     document.getElementById('shop-title').textContent = `Results for "${q}"`;
     ['sneaker','comic','other'].forEach(cat => {
         const cont = document.getElementById(cat + '-items');
@@ -516,8 +517,6 @@ document.getElementById('searchForm').onsubmit = (e) => {
 /* ---------- Initialization ---------- */
 document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
-
-    // Implementierte Kategorie-Klicks
     document.getElementById('open-sneaker').onclick = () => openShop('sneaker');
     document.getElementById('open-comic').onclick = () => openShop('comic');
     document.getElementById('open-other').onclick = () => openShop('other');
