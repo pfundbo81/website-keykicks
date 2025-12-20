@@ -441,12 +441,17 @@ function removeFromCart(idx) { cart.splice(idx, 1); localStorage.setItem('keykic
 function openCart() { document.getElementById('cart-bg').style.display='block'; document.getElementById('cart-overlay').style.display='flex'; renderCart(); }
 function closeCart() { document.getElementById('cart-bg').style.display='none'; document.getElementById('cart-overlay').style.display='none'; }
 function openShop(cat) { 
-    document.getElementById('shop-overlay').style.display='flex';
+    // Macht das Overlay-Fenster sichtbar
+    document.getElementById('shop-overlay').style.display = 'flex';
+    
+    // Setzt den Titel oben im Fenster (z.B. "Sneaker Shop")
     document.getElementById('shop-title').textContent = cat.charAt(0).toUpperCase() + cat.slice(1) + ' Shop';
-    ['sneaker','comic','other'].forEach(c => {
-        document.getElementById(c + '-items').style.display = (c === cat) ? 'grid' : 'none';
-        Array.from(document.getElementById(c + '-items').children).forEach(el => el.style.display = 'flex');
-    });
+    
+    // Logik: Zeige nur den Bereich an, der zur geklickten Kategorie passt
+    document.getElementById('sneaker-items').style.display = (cat === 'sneaker') ? 'grid' : 'none';
+    document.getElementById('comic-items').style.display = (cat === 'comic') ? 'grid' : 'none';
+    document.getElementById('other-items').style.display = (cat === 'other') ? 'grid' : 'none';
+});
 }
 function closeShop() { document.getElementById('shop-overlay').style.display='none'; }
 
@@ -480,4 +485,5 @@ document.getElementById('checkout-form-shipping-payment').onsubmit = (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
     check
+
 
