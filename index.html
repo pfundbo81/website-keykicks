@@ -1,65 +1,90 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Keykicks</title>
-    <style>
-        /* ---------- HEADER & MARQUEE ---------- */
-        .header-marquee { flex-grow: 1; overflow: hidden; white-space: nowrap; position: relative; height: 100%; display: flex; align-items: center; margin: 0 20px; }
-        .marquee-text { display: inline-block; padding-left: 100%; color: #fff; font-size: 0.85rem; letter-spacing: 1px; animation: marqueeScroll 12s linear infinite; }
-        @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Keykicks</title>
+<style>
+/* ---------- Header Marquee ---------- */
+.header-marquee { flex-grow: 1; overflow: hidden; white-space: nowrap; position: relative; height: 100%; display: flex; align-items: center; margin: 0 20px; }
+.marquee-text { display: inline-block; padding-left: 100%; color: #fff; font-size: 0.85rem; letter-spacing: 1px; animation: marqueeScroll 12s linear infinite; }
+@keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* ---------- GLOBAL ---------- */
-        body { margin: 0; font-family: Arial, sans-serif; background-color: #fff; color: #222; overflow-x: hidden; }
-        p { margin: 70px auto; padding: 0 135px; font-family: 'Roboto', sans-serif; font-size: 20px; line-height: 1.4; max-width: 1000px; }
+/* ---------- global ---------- */
+body { margin: 0; font-family: Arial, sans-serif; background-color: #fff; color: #222; overflow-x: hidden; }
+p.intro-text { margin: 70px auto; padding: 0 20px; font-family: 'Roboto', sans-serif; font-size: 20px; line-height: 1.4; max-width: 1000px; text-align: center; }
 
-        header { background-color: #111; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; height: 40px; width: 100%; box-sizing: border-box; position: relative; z-index: 1000; }
-        .header-left, .header-right { display: flex; align-items: center; gap: 10px; height: 100%; }
-        .header-left a img { width: 20px; height: 20px; filter: invert(1); cursor: pointer; display: block; }
-        
-        .search-bar { display: flex; align-items: center; height: 26px; }
-        .search-bar input { padding: 0 8px; border-radius: 4px 0 0 4px; border: none; font-size: 0.85rem; height: 100%; width: 120px; }
-        .search-bar button { background-color: #fff; color: #111; border: none; padding: 0 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; height: 100%; }
+header {
+    background-color: #111;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box; 
+    position: relative;
+    z-index: 1000;
+}
 
-        /* ---------- VIDEO SECTION ---------- */
-        .video-section { width: 100%; height: calc(85vh - 45px); background-color: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-        .video-section video { width: 100%; height: 100%; object-fit: cover; }
-        .overlay-image { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 50%; pointer-events: none; }
+.header-left, .header-right { display: flex; align-items: center; gap: 10px; height: 100%; }
+.header-left a img { width: 20px; height: 20px; filter: invert(1); cursor: pointer; display: block; }
 
-        /* ---------- SHOP & CATEGORIES ---------- */
-        main { padding: 2rem; max-width: 1000px; margin: 0 auto; }
-        .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 50px; }
-        .category { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s; }
-        .category:hover { transform: translateY(-5px); }
-        .category img { width: 100%; height: 180px; object-fit: contain; padding: 5px; }
-        .category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; width: 100%; }
+.search-bar { display: flex; align-items: center; height: 26px; }
+.search-bar input[type="text"] { padding: 0 8px; border-radius: 4px 0 0 4px; border: none; outline: none; font-size: 0.85rem; height: 100%; width: 120px; }
+.search-bar button { background-color: #fff; color: #111; border: none; padding: 0 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; font-size: 0.85rem; height: 100%; }
 
-        /* ---------- MODALS (CART & CHECKOUT) ---------- */
-        .shop-overlay, .checkout-step-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: none; flex-direction: column; overflow-y: auto; z-index: 5000; padding: 2rem; box-sizing: border-box; }
-        .checkout-step-modal { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 500px; height: auto; max-height: 85vh; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
-        
-        #cart-overlay { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 450px; background: #fff; padding: 20px; border-radius: 10px; z-index: 5000; display: none; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
-        #cart-bg, #popup-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 4000; display: none; }
+.video-section { width: 100%; height: calc(85vh - 45px); background-color: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+.video-section video { width: 100%; height: 100%; object-fit: cover; }
+.overlay-image { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 50%; height: auto; pointer-events: none; }
 
-        .checkout-btn { width: 100%; padding: 12px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1rem; }
-        .close-btn, .modal-close-btn { position: absolute; top: 15px; left: 25px; width: 25px; cursor: pointer; z-index: 1001; }
-    </style>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+main { padding: 2rem; max-width: 1000px; margin: 0 auto; }
+
+/* ---------- Scroll Arrow ---------- */
+.scroll-down { text-align: center; cursor: pointer; margin-top: -1rem; margin-bottom: 2rem; }
+.scroll-down img { width: 50px; height: auto; animation: bounce 1.5s infinite; opacity: 0.8; }
+@keyframes bounce { 0%,20%,50%,80%,100% { transform: translateY(0); } 40% { transform: translateY(10px); } 60% { transform: translateY(5px); } }
+
+/* ---------- Categories ---------- */
+.categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 50px; }
+.category { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; text-decoration: none; color: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s ease; }
+.category:hover { transform: translateY(-5px); }
+.category img { width: 100%; height: 160px; object-fit: contain; padding: 10px; }
+.category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; font-size: 1.1rem; width: 100%; }
+
+/* ---------- Shop Overlay ---------- */
+.shop-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: none; flex-direction: column; overflow-y: auto; z-index: 2000; padding: 2rem; box-sizing: border-box; }
+.shop-header { display: flex; align-items: center; margin-bottom: 2rem; position: relative; }
+.shop-title { font-size: 1.5rem; font-weight: bold; width: 100%; text-align: center; }
+.close-btn { position: absolute; top: 0; left: 0; width: 25px; cursor: pointer; }
+.shop-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2rem; }
+
+/* ---------- Footer ---------- */
+footer { padding: 2rem; max-width: 1000px; margin: 0 auto; border-top: 1px solid #eee; }
+footer .links { display: flex; flex-direction: column; gap: 0.5rem; }
+footer .links a { color: #111; text-decoration: none; font-weight: bold; }
+footer .copyright { margin-top: 2rem; text-align: center; color: #777; font-size: 0.9rem; }
+
+/* Weitere UI Elemente (Cart, Popup etc.) hier gekürzt für die Übersicht, aber im JS aktiv */
+#popup-bg, #cart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3000; display: none; }
+#cart-overlay { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 450px; background: #fff; padding: 20px; border-radius: 10px; z-index: 4000; display: none; flex-direction: column; }
+#notify-bar { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 1000; writing-mode: vertical-rl; }
+</style>
 </head>
 <body>
 
 <header>
     <div class="header-left">
-        <a href="#" onclick="openCart(); return false;"><img src="icons/shopping-cart.png" alt="Warenkorb"></a>
+        <a href="#" onclick="openCart(); return false;"><img src="icons/shopping-cart.png" alt="Cart"></a>
     </div>
     <div class="header-marquee">
-        <div class="marquee-text">This Site is under development. No orders possible. Please click the "Notify me button" to stay updated.</div>
+        <div class="marquee-text">This Site is under development. No orders possible. Please click the "Notify me" button to stay updated.</div>
     </div>
     <div class="header-right">
         <form class="search-bar" id="searchForm">
-            <input type="text" id="searchInput" placeholder="Suchen..." required>
-            <button type="submit">Suche</button>
+            <input type="text" id="searchInput" placeholder="Search...">
+            <button type="submit">Search</button>
         </form>
     </div>
 </header>
@@ -70,7 +95,14 @@
 </section>
 
 <main>
-    <p><b>Keykicks</b> bietet stylische Schlüsselanhänger mit Liebe zum Detail. <b>Hol dir deinen Eyecatcher!</b></p>
+    <div class="scroll-down" onclick="scrollToEnd()">
+        <img src="icons/arrow.png" alt="Scroll Down">
+    </div>
+
+    <p class="intro-text">
+        <b>Keykicks</b> fills the niche of stylish keychains created with a love for detail... <br>
+        <b>Grab your daily eye-catcher!</b>
+    </p>
     
     <div class="categories">
         <div class="category" onclick="openShop('sneaker')">
@@ -89,114 +121,74 @@
 </main>
 
 <div id="shop-overlay" class="shop-overlay">
-    <img src="icons/close.png" class="close-btn" onclick="closeShop()">
-    <h2 id="shop-title" style="text-align:center;">Shop</h2>
-    <div id="sneaker-items" class="shop-content" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem;"></div>
-    <div id="comic-items" class="shop-content" style="display:none;"></div>
-    <div id="other-items" class="shop-content" style="display:none;"></div>
+    <div class="shop-header">
+        <img src="icons/close.png" class="close-btn" onclick="closeShop()">
+        <div class="shop-title" id="shop-title">Shop</div>
+    </div>
+    <div id="sneaker-items" class="shop-content"></div>
+    <div id="comic-items" class="shop-content"></div>
+    <div id="other-items" class="shop-content"></div>
 </div>
 
 <div id="cart-bg" onclick="closeCart()"></div>
 <div id="cart-overlay">
-    <h3>Warenkorb</h3>
+    <h3>Your Cart</h3>
     <div id="cart-items-container"></div>
-    <p>Gesamt: <span id="cart-total">€0,00</span></p>
-    <button class="checkout-btn" onclick="openAddressModal()">Zur Kasse</button>
+    <button onclick="closeCart()" style="margin-top:10px;">Close</button>
 </div>
 
-<div id="checkout-modal-address" class="checkout-step-modal">
-    <h3>1. Versandadresse</h3>
-    <form id="checkout-form-backend" action="https://formspree.io/f/DEINE_ID" method="POST">
-        <input type="email" name="email" placeholder="E-Mail" required style="width:100%; margin-bottom:10px; padding:8px;">
-        <input type="text" name="name" placeholder="Vollständiger Name" required style="width:100%; margin-bottom:10px; padding:8px;">
-        <input type="text" name="address" placeholder="Straße / Hausnr." required style="width:100%; margin-bottom:10px; padding:8px;">
-        <input type="text" name="city" placeholder="Stadt" required style="width:100%; margin-bottom:10px; padding:8px;">
-        
-        <input type="hidden" name="Warenkorb_Details" id="cart-data-input">
-        <input type="hidden" name="Gesamtpreis" id="total-price-input">
-        
-        <button type="submit" class="checkout-btn">Bestellung abschicken</button>
-    </form>
-</div>
+<div id="notify-bar" onclick="alert('Notification system coming soon!')">Notify me</div>
+
+<footer>
+    <div class="links">
+        <a href="AGB.html">Terms & Conditions</a>
+        <a href="delivery.html">Shipping Policy</a>
+        <a href="privacy.html">Privacy Policy</a>
+    </div>
+    <div class="copyright">© 2025 Keykicks – All Rights Reserved.</div>
+</footer>
 
 <script>
-    let cart = JSON.parse(localStorage.getItem('keykicksCart')) || [];
-    let allProductsData = { sneaker: [], comic: [], other: [] };
+let allProductsData = { sneaker: [], comic: [], other: [] };
+let cart = [];
 
-    // PRODUKTE LADEN [cite: 117]
-    async function loadProducts() {
+async function loadProducts() {
+    try {
         const res = await fetch('https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json');
         const data = await res.json();
         allProductsData = data;
-        renderProducts();
-    }
+        renderAll();
+    } catch(e) { console.error("Could not load products", e); }
+}
 
-    function renderProducts() {
-        ['sneaker', 'comic', 'other'].forEach(cat => {
-            const cont = document.getElementById(cat + '-items');
-            if (!cont) return;
-            cont.innerHTML = '';
-            allProductsData[cat]?.forEach(p => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'category'; // Nutzt gleiches Design
-                itemDiv.style.padding = "10px";
-                itemDiv.innerHTML = `
-                    <img src="${p.image}">
-                    <b>${p.name}</b>
-                    <p>${p.price}</p>
-                    <button onclick="addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})" style="cursor:pointer; background:#111; color:#fff; border:none; padding:5px 10px; border-radius:4px;">Hinzufügen</button>
-                `;
-                cont.appendChild(itemDiv);
-            });
-        });
-    }
+function renderAll() {
+    ['sneaker', 'comic', 'other'].forEach(cat => {
+        const cont = document.getElementById(cat + '-items');
+        if(!cont || !allProductsData[cat]) return;
+        cont.innerHTML = allProductsData[cat].map(p => `
+            <div class="category" style="cursor:default">
+                <img src="${p.image}">
+                <div class="category-title" style="background:#f4f4f4; color:#000">${p.name} - ${p.price}</div>
+            </div>
+        `).join('');
+    });
+}
 
-    // BACKEND LOGIK: WARENKORB SENDEN 
-    document.getElementById('checkout-form-backend').onsubmit = function(e) {
-        document.getElementById('cart-data-input').value = JSON.stringify(cart);
-        document.getElementById('total-price-input').value = document.getElementById('cart-total').textContent;
-        // Formular wird nun an Formspree gesendet
-    };
+function openShop(cat) {
+    document.getElementById('shop-overlay').style.display = 'flex';
+    document.getElementById('shop-title').textContent = cat.toUpperCase();
+    document.getElementById('sneaker-items').style.display = (cat === 'sneaker') ? 'grid' : 'none';
+    document.getElementById('comic-items').style.display = (cat === 'comic') ? 'grid' : 'none';
+    document.getElementById('other-items').style.display = (cat === 'other') ? 'grid' : 'none';
+}
 
-    function openShop(cat) {
-        document.getElementById('shop-overlay').style.display = 'flex';
-        ['sneaker', 'comic', 'other'].forEach(c => {
-            document.getElementById(c + '-items').style.display = (c === cat) ? 'grid' : 'none';
-        });
-    }
+function closeShop() { document.getElementById('shop-overlay').style.display = 'none'; }
+function openCart() { document.getElementById('cart-bg').style.display = 'block'; document.getElementById('cart-overlay').style.display = 'flex'; }
+function closeCart() { document.getElementById('cart-bg').style.display = 'none'; document.getElementById('cart-overlay').style.display = 'none'; }
+function scrollToEnd() { window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); }
 
-    function closeShop() { document.getElementById('shop-overlay').style.display = 'none'; }
-    
-    function openCart() { 
-        document.getElementById('cart-bg').style.display = 'block';
-        document.getElementById('cart-overlay').style.display = 'flex';
-        renderCart();
-    }
-
-    function closeCart() { 
-        document.getElementById('cart-bg').style.display = 'none';
-        document.getElementById('cart-overlay').style.display = 'none';
-    }
-
-    function addToCart(p) {
-        cart.push(p);
-        localStorage.setItem('keykicksCart', JSON.stringify(cart));
-        alert(p.name + " hinzugefügt!");
-    }
-
-    function renderCart() {
-        const container = document.getElementById('cart-items-container');
-        container.innerHTML = cart.map(item => `<div>${item.name} - ${item.price}</div>`).join('');
-        // Preisberechnung hier (vereinfacht)
-        document.getElementById('cart-total').textContent = "Berechnet beim Checkout";
-    }
-
-    function openAddressModal() {
-        closeCart();
-        document.getElementById('checkout-modal-address').style.display = 'block';
-    }
-
-    loadProducts();
+window.onload = loadProducts;
 </script>
+
 </body>
 </html>
