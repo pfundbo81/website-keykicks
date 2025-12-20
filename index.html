@@ -6,10 +6,6 @@
 <title>Welcome to Keykicks</title>
 
 <style>
-/* ===========================
-   ORIGINAL DESIGN – UNVERÄNDERT
-   =========================== */
-
 /* ---------- Header Marquee ---------- */
 .header-marquee { flex-grow: 1; overflow: hidden; white-space: nowrap; position: relative; height: 100%; display: flex; align-items: center; margin: 0 20px; }
 .marquee-text { display: inline-block; padding-left: 100%; color: #fff; font-size: 0.85rem; letter-spacing: 1px; animation: marqueeScroll 12s linear infinite; }
@@ -35,18 +31,11 @@ header { background-color: #111; color: #fff; display: flex; align-items: center
 .category img { width: 100%; height: 160px; object-fit: contain; padding: 10px; }
 .category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; width: 100%; }
 
-/* ---------- CART & CHECKOUT STYLES ---------- */
-#cart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 4000; display: none; }
-#cart-overlay { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 450px; background: #fff; padding: 20px; border-radius: 10px; z-index: 5000; display: none; max-height: 80vh; overflow-y: auto; flex-direction: column; }
-
-/* Checkout Modals */
-.checkout-step-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 500px; background: #fff; padding: 25px; border-radius: 10px; z-index: 6000; display: none; max-height: 85vh; overflow-y: auto; }
-
-.btn-black { background: #111; color: #fff; border: none; padding: 12px; cursor: pointer; border-radius: 5px; width: 100%; }
-
-/* Notify Form */
+/* Notify */
 #notify-bar { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 2000; writing-mode: vertical-rl; text-orientation: mixed; font-weight: bold; }
 #contact-form-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 10px; padding: 2rem; box-shadow: 0 0 20px rgba(0,0,0,0.3); z-index: 3500; width: 90%; max-width: 400px; }
+
+.btn-black { background: #111; color: #fff; border: none; padding: 12px; cursor: pointer; border-radius: 5px; width: 100%; }
 </style>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -56,7 +45,7 @@ header { background-color: #111; color: #fff; display: flex; align-items: center
 
 <header>
     <div class="header-left">
-        <a href="#" onclick="openCart(); return false;"><img src="icons/shopping-cart.png"></a>
+        <a href="#"><img src="icons/shopping-cart.png" alt="Cart"></a>
     </div>
     <div class="header-marquee">
         <div class="marquee-text">This Site is under development. No orders possible.</div>
@@ -64,18 +53,22 @@ header { background-color: #111; color: #fff; display: flex; align-items: center
     <div class="header-right">
         <form class="search-bar">
             <input type="text" placeholder="Search article...">
-            <button>Search</button>
+            <button type="submit">Search</button>
         </form>
     </div>
 </header>
 
 <section class="video-section">
-    <video autoplay muted loop><source src="test2.mp4" type="video/mp4"></video>
+    <video autoplay muted loop>
+        <source src="test2.mp4" type="video/mp4">
+    </video>
     <img src="keykickslogowhite.png" class="overlay-image">
 </section>
 
 <main>
-    <p style="text-align:center; padding:2rem;"><b>Keykicks</b> offers stylish keychains inspired by sneakers and comics.</p>
+    <p style="text-align:center; padding: 2rem;">
+        <b>Keykicks</b> offers stylish keychains inspired by sneakers and comics.
+    </p>
     <div class="categories">
         <div class="category"><img src="icons/sneakers.png"><div class="category-title">Sneaker</div></div>
         <div class="category"><img src="icons/theater.png"><div class="category-title">Comic</div></div>
@@ -86,22 +79,18 @@ header { background-color: #111; color: #fff; display: flex; align-items: center
 <div id="notify-bar" onclick="openContact()">Notify me</div>
 
 <div id="contact-form-overlay">
-    <img src="icons/close.png" style="width:20px; cursor:pointer;" onclick="closeContact()">
+    <img src="icons/close.png" style="width:20px; cursor:pointer; margin-bottom:10px;" onclick="closeContact()">
     <h3>Stay Updated</h3>
     <form id="contactForm">
-        <input type="text" name="name" placeholder="Name" required>
-        <input type="email" name="email" placeholder="Email" required>
+        <input name="name" placeholder="Name" required>
+        <input name="email" type="email" placeholder="Email" required>
         <textarea name="message" rows="4" placeholder="Message" required></textarea>
-        <div class="g-recaptcha" data-sitekey="6LdRciEsAAAAAHrPpLKwHuynngZorfdUbomed_mD"></div>
+        <div class="g-recaptcha" data-sitekey="DEIN_RECAPTCHA_SITE_KEY"></div>
         <button type="submit" class="btn-black">Send</button>
     </form>
 </div>
 
 <script>
-/* ==============================
-   N E U : VERCEL API ANBINDUNG
-   ============================== */
-
 function openContact() {
     document.getElementById('contact-form-overlay').style.display = 'block';
 }
@@ -115,31 +104,27 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     const payload = {
         name: e.target.name.value,
         email: e.target.email.value,
-        message: e.target.message.value
+        message: e.target.message.value,
+        captcha: grecaptcha.getResponse()
     };
 
-    try {
-        const res = await fetch('/api/notify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+    const res = await fetch('/api/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
 
-        const data = await res.json();
+    const data = await res.json();
 
-        if (!res.ok) {
-            alert(data.error || 'Server error');
-            return;
-        }
-
-        alert('Thanks! You will be notified.');
-        e.target.reset();
-        closeContact();
-
-    } catch (err) {
-        alert('Network error');
-        console.error(err);
+    if (!res.ok) {
+        alert(data.error || 'Error');
+        return;
     }
+
+    alert('Thank you! You will be notified.');
+    e.target.reset();
+    grecaptcha.reset();
+    closeContact();
 });
 </script>
 
