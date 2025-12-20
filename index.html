@@ -1,131 +1,460 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome to Keykicks</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keykicks - Welcome</title>
+    <style>
+        /* ---------- GLOBAL & RESET ---------- */
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Arial', sans-serif; background-color: #fff; color: #222; overflow-x: hidden; }
+        
+        /* ---------- HEADER & MARQUEE ---------- */
+        header {
+            background-color: #111; color: #fff; display: flex; align-items: center; 
+            justify-content: space-between; padding: 0 15px; height: 45px; 
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+        }
+        .header-marquee { flex-grow: 1; overflow: hidden; white-space: nowrap; margin: 0 20px; }
+        .marquee-text { 
+            display: inline-block; padding-left: 100%; color: #fff; font-size: 0.85rem; 
+            animation: marqueeScroll 15s linear infinite; 
+        }
+        @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-<style>
-/* ---------- Header Marquee ---------- */
-.header-marquee { flex-grow: 1; overflow: hidden; white-space: nowrap; position: relative; height: 100%; display: flex; align-items: center; margin: 0 20px; }
-.marquee-text { display: inline-block; padding-left: 100%; color: #fff; font-size: 0.85rem; letter-spacing: 1px; animation: marqueeScroll 12s linear infinite; }
-@keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .search-bar { display: flex; align-items: center; }
+        .search-bar input { border-radius: 4px 0 0 4px; border: none; padding: 5px; outline: none; }
+        .search-bar button { border: none; background: #fff; color: #111; padding: 5px 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; }
 
-/* ---------- Global Styling ---------- */
-body { margin: 0; font-family: Arial, sans-serif; background-color: #fff; color: #222; overflow-x: hidden; }
-header { background-color: #111; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; height: 40px; width: 100%; box-sizing: border-box; position: relative; z-index: 1000; }
-.header-left, .header-right { display: flex; align-items: center; gap: 10px; height: 100%; }
-.header-left a img { width: 20px; height: 20px; filter: invert(1); cursor: pointer; }
-.search-bar { display: flex; align-items: center; height: 26px; }
-.search-bar input { padding: 0 8px; border-radius: 4px 0 0 4px; border: none; font-size: 0.85rem; height: 100%; width: 120px; }
-.search-bar button { background-color: #fff; color: #111; border: none; padding: 0 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; height: 100%; }
+        /* ---------- HERO SECTION ---------- */
+        .video-section { 
+            width: 100%; height: 85vh; background-color: #000; margin-top: 45px;
+            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; 
+        }
+        .video-section video { width: 100%; height: 100%; object-fit: cover; }
+        .overlay-image { position: absolute; max-width: 40%; pointer-events: none; z-index: 10; }
 
-/* Video & Main */
-.video-section { width: 100%; height: calc(85vh - 45px); background-color: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-.video-section video { width: 100%; height: 100%; object-fit: cover; }
-.overlay-image { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 50%; pointer-events: none; }
+        /* ---------- MAIN CONTENT ---------- */
+        main { padding: 40px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .intro-text { font-size: 1.2rem; line-height: 1.6; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto; }
 
-.categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; padding: 2rem; max-width: 1000px; margin: 0 auto; }
-.category { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); cursor: pointer; overflow: hidden; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s; }
-.category:hover { transform: translateY(-5px); }
-.category img { width: 100%; height: 160px; object-fit: contain; padding: 10px; }
-.category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; width: 100%; }
+        .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .category { 
+            background: #f4f4f4; border-radius: 12px; overflow: hidden; cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .category:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .category img { width: 100%; height: 200px; object-fit: contain; background: #fff; }
+        .category-title { padding: 15px; background: #111; color: #fff; font-weight: bold; }
 
-/* Notify */
-#notify-bar { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 2000; writing-mode: vertical-rl; text-orientation: mixed; font-weight: bold; }
-#contact-form-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 10px; padding: 2rem; box-shadow: 0 0 20px rgba(0,0,0,0.3); z-index: 3500; width: 90%; max-width: 400px; }
+        /* ---------- SHOP OVERLAY ---------- */
+        .shop-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; 
+            z-index: 2000; display: none; flex-direction: column; padding: 20px; overflow-y: auto; 
+        }
+        .shop-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        .shop-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
 
-.btn-black { background: #111; color: #fff; border: none; padding: 12px; cursor: pointer; border-radius: 5px; width: 100%; }
-</style>
+        .item { 
+            border: 1px solid #eee; padding: 15px; border-radius: 8px; text-align: center; 
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .item img { width: 100%; height: 150px; object-fit: contain; cursor: pointer; }
+        .item button { background: #111; color: #fff; border: none; padding: 10px; cursor: pointer; border-radius: 4px; margin-top: 10px; }
 
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        /* ---------- MODALS (Cart, Checkout, Contact) ---------- */
+        .modal-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3000; display: none; }
+        .modal-content { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            background: #fff; padding: 30px; border-radius: 12px; z-index: 3101; 
+            width: 90%; max-width: 500px; display: none; max-height: 90vh; overflow-y: auto;
+        }
+        
+        .cart-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .cart-item img { width: 50px; height: 50px; object-fit: contain; }
+
+        /* ---------- UI HELPERS ---------- */
+        .notify-bar { 
+            position: fixed; right: 0; top: 50%; transform: translateY(-50%); 
+            background: #111; color: #fff; padding: 15px 10px; cursor: pointer; 
+            writing-mode: vertical-rl; z-index: 100; border-radius: 5px 0 0 5px; 
+        }
+        .scroll-down { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 2rem; cursor: pointer; z-index: 100; transition: opacity 0.3s; }
+        .scroll-down.stop { opacity: 0; pointer-events: none; }
+
+        /* Cookie Banner */
+        #essential-cookie-banner { position: fixed; bottom: 0; width: 100%; background: #111; color: #fff; padding: 20px; z-index: 5000; display: none; text-align: center; }
+    </style>
 </head>
-
 <body>
 
 <header>
     <div class="header-left">
-        <a href="#"><img src="icons/shopping-cart.png" alt="Cart"></a>
+        <img src="icons/shopping-cart.png" alt="Cart" style="width:25px; cursor:pointer; filter:invert(1);" onclick="openCart()">
+        <span id="cart-count" style="background: red; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem;">0</span>
     </div>
     <div class="header-marquee">
-        <div class="marquee-text">This Site is under development. No orders possible.</div>
+        <div class="marquee-text">Sichern Sie sich jetzt exklusive Sneaker-Keychains! +++ Kostenloser Versand ab 30€ +++ Besuchen Sie unseren Shop +++</div>
     </div>
     <div class="header-right">
-        <form class="search-bar">
-            <input type="text" placeholder="Search article...">
-            <button type="submit">Search</button>
+        <form id="searchForm" class="search-bar">
+            <input type="text" id="searchInput" placeholder="Suchen...">
+            <button type="submit">Go</button>
         </form>
     </div>
 </header>
 
 <section class="video-section">
-    <video autoplay muted loop>
-        <source src="test2.mp4" type="video/mp4">
-    </video>
-    <img src="keykickslogowhite.png" class="overlay-image">
+    <video autoplay muted loop playsinline><source src="test2.mp4" type="video/mp4"></video>
+    <img src="keykickslogowhite.png" alt="Keykicks Logo" class="overlay-image">
 </section>
 
+<div class="scroll-down" onclick="scrollToEnd()">↓</div>
+
 <main>
-    <p style="text-align:center; padding: 2rem;">
-        <b>Keykicks</b> offers stylish keychains inspired by sneakers and comics.
+    <p class="intro-text">
+        Willkommen bei <b>Keykicks</b>. Wir bringen die Welt der Sneaker und Comics an deinen Schlüsselbund. 
+        Entdecke unsere detailgetreuen Mini-Sneaker und einzigartigen Accessoires.
     </p>
+
     <div class="categories">
-        <div class="category"><img src="icons/sneakers.png"><div class="category-title">Sneaker</div></div>
-        <div class="category"><img src="icons/theater.png"><div class="category-title">Comic</div></div>
-        <div class="category"><img src="icons/others.png"><div class="category-title">Other</div></div>
+        <div class="category" id="open-sneaker">
+            <img src="icons/sneakers.png" alt="Sneaker Shop">
+            <div class="category-title">Sneaker Keychains</div>
+        </div>
+        <div class="category" id="open-comic">
+            <img src="icons/theater.png" alt="Comic Shop">
+            <div class="category-title">Comic Accessoires</div>
+        </div>
+        <div class="category" id="open-other">
+            <img src="icons/others.png" alt="Sonstiges">
+            <div class="category-title">Andere Highlights</div>
+        </div>
     </div>
 </main>
 
-<div id="notify-bar" onclick="openContact()">Notify me</div>
+<div class="notify-bar" id="notify-bar">Kontakt / Notify Me</div>
 
-<div id="contact-form-overlay">
-    <img src="icons/close.png" style="width:20px; cursor:pointer; margin-bottom:10px;" onclick="closeContact()">
-    <h3>Stay Updated</h3>
-    <form id="contactForm">
-        <input name="name" placeholder="Name" required>
-        <input name="email" type="email" placeholder="Email" required>
-        <textarea name="message" rows="4" placeholder="Message" required></textarea>
-        <div class="g-recaptcha" data-sitekey="DEIN_RECAPTCHA_SITE_KEY"></div>
-        <button type="submit" class="btn-black">Send</button>
+<div id="shop-overlay" class="shop-overlay">
+    <div class="shop-header">
+        <h2 id="shop-title">Shop</h2>
+        <span style="font-size: 2rem; cursor: pointer;" onclick="closeShop()">&times;</span>
+    </div>
+    <div id="sneaker-items" class="shop-content"></div>
+    <div id="comic-items" class="shop-content" style="display:none;"></div>
+    <div id="other-items" class="shop-content" style="display:none;"></div>
+</div>
+
+<div id="popup-bg" class="modal-bg" onclick="closeAllModals()"></div>
+
+<div id="cart-overlay" class="modal-content">
+    <h3>Dein Warenkorb</h3>
+    <div id="cart-items-container"></div>
+    <div style="margin-top: 20px; font-weight: bold; border-top: 2px solid #eee; padding-top: 10px;">
+        Gesamtsumme: <span id="cart-total">€0,00</span>
+    </div>
+    <button id="proceed-to-checkout-btn" style="width: 100%; padding: 12px; background: #4CAF50; color: white; border: none; margin-top: 15px; cursor: pointer;">Zur Kasse</button>
+</div>
+
+<div id="checkout-modal-address" class="modal-content">
+    <h3>1. Lieferadresse</h3>
+    <form id="checkout-form-address">
+        <input type="email" name="email" placeholder="E-Mail" required style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        <div style="display: flex; gap: 10px;">
+            <input type="text" name="firstName" placeholder="Vorname" required style="flex:1; padding: 8px;">
+            <input type="text" name="lastName" placeholder="Nachname" required style="flex:1; padding: 8px;">
+        </div>
+        <input type="text" name="street" placeholder="Straße & Hausnummer" required style="width: 100%; padding: 8px; margin: 10px 0;">
+        <div style="display: flex; gap: 10px;">
+            <input type="text" name="zip" placeholder="PLZ" required style="width: 80px; padding: 8px;">
+            <input type="text" name="city" placeholder="Stadt" required style="flex:1; padding: 8px;">
+        </div>
+        <button type="submit" style="width: 100%; background: #111; color: #fff; padding: 10px; margin-top: 15px; border: none;">Weiter zu Versand & Zahlung</button>
     </form>
 </div>
 
+<div id="checkout-modal-shipping-payment" class="modal-content">
+    <h3>2. Versand & Zahlung</h3>
+    <form id="checkout-form-shipping-payment">
+        <h4>Versandart</h4>
+        <label><input type="radio" name="shipping" value="4.99" checked> Standardversand (€4,99)</label>
+        <h4>Zahlungsmethode</h4>
+        <label><input type="radio" name="payment" value="PayPal" checked> PayPal</label><br>
+        <label><input type="radio" name="payment" value="Kreditkarte"> Kreditkarte</label>
+        <button type="submit" style="width: 100%; background: #111; color: #fff; padding: 10px; margin-top: 15px; border: none;">Bestellung prüfen</button>
+    </form>
+</div>
+
+<div id="checkout-modal-review" class="modal-content">
+    <h3>3. Überprüfung</h3>
+    <div id="review-summary" style="font-size: 0.9rem; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+        <div id="review-address-display"></div>
+        <hr>
+        <div id="review-items-summary"></div>
+        <div style="margin-top: 10px; font-weight: bold;">Gesamt: <span id="review-total-display"></span></div>
+    </div>
+    <button id="complete-order-btn" style="width: 100%; background: #007bff; color: #fff; padding: 15px; margin-top: 15px; border: none; font-size: 1.1rem;">Jetzt zahlungspflichtig bestellen</button>
+    <div id="checkout-response" style="margin-top: 10px; text-align: center;"></div>
+</div>
+
+<div id="product-popup" class="modal-content">
+    <img id="popup-img" src="" style="width: 100%; height: 250px; object-fit: contain;">
+    <h2 id="popup-title"></h2>
+    <p id="popup-price" style="font-weight: bold; font-size: 1.2rem;"></p>
+    <p id="popup-desc"></p>
+    <button id="popup-add-btn" style="width: 100%; padding: 12px; background: #111; color: #fff; border: none; cursor: pointer;">In den Warenkorb</button>
+</div>
+
+<div id="contact-form-overlay" class="modal-content">
+    <h3>Kontaktieren Sie uns</h3>
+    <form id="contactForm">
+        <input type="text" name="name" placeholder="Dein Name" required style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        <input type="email" name="email" placeholder="Deine E-Mail" required style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        <textarea name="message" placeholder="Nachricht" required style="width: 100%; height: 100px; padding: 8px;"></textarea>
+        <div class="g-recaptcha" data-sitekey="6LdRciEsAAAAAHrPpLKwHuynngZorfdUbomed_mD" style="margin: 10px 0;"></div>
+        <button type="submit" style="width: 100%; padding: 10px; background: #111; color: white;">Absenden</button>
+    </form>
+    <div id="form-response"></div>
+</div>
+
+<div id="cookie-backdrop" class="modal-bg"></div>
+<div id="essential-cookie-banner">
+    Wir verwenden Cookies für die Warenkorb-Funktion. 
+    <button id="accept-essential-cookies" style="margin-left: 15px; padding: 5px 15px; cursor: pointer;">Akzeptieren</button>
+</div>
+
 <script>
-function openContact() {
-    document.getElementById('contact-form-overlay').style.display = 'block';
-}
-function closeContact() {
-    document.getElementById('contact-form-overlay').style.display = 'none';
-}
+    /* ---------- DATA & CONFIG ---------- */
+    let allProductsData = { sneaker: [], comic: [], other: [] };
+    let cart = [];
+    let checkoutData = { address: null, shipping: 0, payment: null, total: 0 };
+    const GITHUB_URL = 'https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json';
+    const PLACEHOLDER_IMG = "icons/placeholder.png";
 
-document.getElementById('contactForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const payload = {
-        name: e.target.name.value,
-        email: e.target.email.value,
-        message: e.target.message.value,
-        captcha: grecaptcha.getResponse()
-    };
-
-    const res = await fetch('/api/notify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+    /* ---------- INITIALIZATION ---------- */
+    document.addEventListener('DOMContentLoaded', () => {
+        loadCart();
+        loadProducts();
+        
+        if (localStorage.getItem('keykicksEssentialConsent') !== 'true') {
+            document.getElementById('cookie-backdrop').style.display = 'block';
+            document.getElementById('essential-cookie-banner').style.display = 'block';
+        }
     });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-        alert(data.error || 'Error');
-        return;
+    /* ---------- API & RENDERING ---------- */
+    async function loadProducts() {
+        try {
+            const res = await fetch(GITHUB_URL, { cache: 'no-store' });
+            const data = await res.json();
+            allProductsData = {
+                sneaker: (data.sneaker || []).map((p, i) => ({...p, id: `sneaker-${i}`, category: 'sneaker'})),
+                comic: (data.comic || []).map((p, i) => ({...p, id: `comic-${i}`, category: 'comic'})),
+                other: (data.other || []).map((p, i) => ({...p, id: `other-${i}`, category: 'other'}))
+            };
+            // Initial render
+            renderCategory('sneaker');
+            renderCategory('comic');
+            renderCategory('other');
+        } catch (err) {
+            console.error("Fehler beim Laden der Produkte:", err);
+        }
     }
 
-    alert('Thank you! You will be notified.');
-    e.target.reset();
-    grecaptcha.reset();
-    closeContact();
-});
+    function renderCategory(cat) {
+        const container = document.getElementById(cat + '-items');
+        container.innerHTML = '';
+        allProductsData[cat].forEach(prod => {
+            const el = document.createElement('div');
+            el.className = 'item';
+            el.setAttribute('data-id', prod.id);
+            el.innerHTML = `
+                <img src="${prod.image || PLACEHOLDER_IMG}" onclick="openProductDetail('${cat}', '${prod.id}')">
+                <div>
+                    <b>${prod.name}</b>
+                    <p>${prod.price}</p>
+                </div>
+                <button onclick="addToCart('${cat}', '${prod.id}')">In den Warenkorb</button>
+            `;
+            container.appendChild(el);
+        });
+    }
+
+    /* ---------- CART LOGIC ---------- */
+    function addToCart(cat, id) {
+        const product = allProductsData[cat].find(p => p.id === id);
+        const priceNum = parseFloat(product.price.replace('€','').replace(',','.'));
+        const existing = cart.find(i => i.id === id);
+        
+        if (existing) {
+            existing.quantity++;
+        } else {
+            cart.push({...product, priceVal: priceNum, quantity: 1});
+        }
+        saveCart();
+        updateCartUI();
+        openCart();
+    }
+
+    function updateCartUI() {
+        const container = document.getElementById('cart-items-container');
+        const count = document.getElementById('cart-count');
+        const totalEl = document.getElementById('cart-total');
+        
+        container.innerHTML = cart.length === 0 ? '<p>Dein Warenkorb ist leer.</p>' : '';
+        let total = 0;
+        let itemsCount = 0;
+
+        cart.forEach(item => {
+            itemsCount += item.quantity;
+            total += item.priceVal * item.quantity;
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <img src="${item.image || PLACEHOLDER_IMG}">
+                <div style="flex:1"><b>${item.name}</b><br>${item.quantity}x ${item.price}</div>
+                <button onclick="removeFromCart('${item.id}')" style="background:none; border:none; color:red; cursor:pointer;">Entfernen</button>
+            `;
+            container.appendChild(div);
+        });
+
+        count.textContent = itemsCount;
+        totalEl.textContent = `€${total.toFixed(2).replace('.', ',')}`;
+        checkoutData.total = total;
+    }
+
+    function removeFromCart(id) {
+        cart = cart.filter(i => i.id !== id);
+        saveCart();
+        updateCartUI();
+    }
+
+    function saveCart() { localStorage.setItem('keykicksCart', JSON.stringify(cart)); }
+    function loadCart() { 
+        const saved = localStorage.getItem('keykicksCart');
+        if (saved) { cart = JSON.parse(saved); updateCartUI(); }
+    }
+
+    /* ---------- UI ACTIONS ---------- */
+    function openShop(category) {
+        document.getElementById('shop-overlay').style.display = 'flex';
+        ['sneaker', 'comic', 'other'].forEach(c => {
+            document.getElementById(c + '-items').style.display = (c === category) ? 'grid' : 'none';
+        });
+        document.getElementById('shop-title').textContent = category.charAt(0).toUpperCase() + category.slice(1) + ' Shop';
+    }
+
+    function closeShop() { document.getElementById('shop-overlay').style.display = 'none'; }
+
+    function openProductDetail(cat, id) {
+        const p = allProductsData[cat].find(i => i.id === id);
+        document.getElementById('popup-img').src = p.image || PLACEHOLDER_IMG;
+        document.getElementById('popup-title').textContent = p.name;
+        document.getElementById('popup-price').textContent = p.price;
+        document.getElementById('popup-desc').textContent = p.description || 'Keine Beschreibung verfügbar.';
+        document.getElementById('popup-add-btn').onclick = () => { addToCart(cat, id); closeAllModals(); };
+        
+        document.getElementById('popup-bg').style.display = 'block';
+        document.getElementById('product-popup').style.display = 'block';
+    }
+
+    function openCart() { 
+        document.getElementById('popup-bg').style.display = 'block';
+        document.getElementById('cart-overlay').style.display = 'block'; 
+    }
+
+    function closeAllModals() {
+        document.querySelectorAll('.modal-content, .modal-bg').forEach(el => el.style.display = 'none');
+    }
+
+    /* ---------- CHECKOUT PROCESS ---------- */
+    document.getElementById('proceed-to-checkout-btn').onclick = () => {
+        if (cart.length === 0) return alert("Warenkorb ist leer!");
+        closeAllModals();
+        document.getElementById('popup-bg').style.display = 'block';
+        document.getElementById('checkout-modal-address').style.display = 'block';
+    };
+
+    document.getElementById('checkout-form-address').onsubmit = (e) => {
+        e.preventDefault();
+        checkoutData.address = Object.fromEntries(new FormData(e.target));
+        document.getElementById('checkout-modal-address').style.display = 'none';
+        document.getElementById('checkout-modal-shipping-payment').style.display = 'block';
+    };
+
+    document.getElementById('checkout-form-shipping-payment').onsubmit = (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        checkoutData.shipping = parseFloat(fd.get('shipping'));
+        checkoutData.payment = fd.get('payment');
+        
+        document.getElementById('checkout-modal-shipping-payment').style.display = 'none';
+        document.getElementById('checkout-modal-review').style.display = 'block';
+        
+        // Render Review
+        document.getElementById('review-address-display').innerHTML = `
+            <strong>Lieferadresse:</strong><br>
+            ${checkoutData.address.firstName} ${checkoutData.address.lastName}<br>
+            ${checkoutData.address.street}, ${checkoutData.address.zip} ${checkoutData.address.city}
+        `;
+        const sum = checkoutData.total + checkoutData.shipping;
+        document.getElementById('review-total-display').textContent = `€${sum.toFixed(2).replace('.', ',')}`;
+        document.getElementById('review-items-summary').innerHTML = cart.map(i => `${i.name} (${i.quantity}x)`).join(', ');
+    };
+
+    document.getElementById('complete-order-btn').onclick = function() {
+        this.disabled = true;
+        const res = document.getElementById('checkout-response');
+        res.textContent = "Zahlung wird verarbeitet...";
+        setTimeout(() => {
+            res.innerHTML = "<span style='color:green'>Bestellung erfolgreich! (Simulation)</span>";
+            cart = []; saveCart(); updateCartUI();
+            setTimeout(() => { location.reload(); }, 2000);
+        }, 2000);
+    };
+
+    /* ---------- SEARCH ---------- */
+    document.getElementById('searchForm').onsubmit = (e) => {
+        e.preventDefault();
+        const q = document.getElementById('searchInput').value.toLowerCase().trim();
+        if(!q) return;
+        
+        openShop('sneaker'); // Öffnet Overlay
+        document.getElementById('shop-title').textContent = `Ergebnisse für "${q}"`;
+        
+        ['sneaker', 'comic', 'other'].forEach(cat => {
+            const container = document.getElementById(cat + '-items');
+            container.style.display = 'grid';
+            Array.from(container.children).forEach(el => {
+                const text = el.innerText.toLowerCase();
+                el.style.display = text.includes(q) ? 'flex' : 'none';
+            });
+        });
+    };
+
+    /* ---------- OTHER HELPERS ---------- */
+    function scrollToEnd() { window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); }
+    window.onscroll = () => {
+        const btn = document.querySelector('.scroll-down');
+        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 50) btn.classList.add('stop');
+        else btn.classList.remove('stop');
+    };
+
+    document.getElementById('notify-bar').onclick = () => {
+        document.getElementById('popup-bg').style.display = 'block';
+        document.getElementById('contact-form-overlay').style.display = 'block';
+    };
+
+    document.getElementById('accept-essential-cookies').onclick = () => {
+        localStorage.setItem('keykicksEssentialConsent', 'true');
+        document.getElementById('cookie-backdrop').style.display = 'none';
+        document.getElementById('essential-cookie-banner').style.display = 'none';
+    };
+
+    document.getElementById('open-sneaker').onclick = () => openShop('sneaker');
+    document.getElementById('open-comic').onclick = () => openShop('comic');
+    document.getElementById('open-other').onclick = () => openShop('other');
+
 </script>
 
 </body>
