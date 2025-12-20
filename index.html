@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Welcome to Keykicks</title>
 <style>
-/* ---------- Header Marquee (Original aus keykicks-online.html) ---------- */
+/* ---------- Header Marquee ---------- */
 .header-marquee { flex-grow: 1; overflow: hidden; white-space: nowrap; position: relative; height: 100%; display: flex; align-items: center; margin: 0 20px; }
 .marquee-text { display: inline-block; padding-left: 100%; color: #fff; font-size: 0.85rem; letter-spacing: 1px; animation: marqueeScroll 12s linear infinite; }
 @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -19,7 +19,7 @@ header { background-color: #111; color: #fff; display: flex; align-items: center
 .search-bar input { padding: 0 8px; border-radius: 4px 0 0 4px; border: none; font-size: 0.85rem; height: 100%; width: 120px; }
 .search-bar button { background-color: #fff; color: #111; border: none; padding: 0 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; height: 100%; }
 
-/* Video & Categories */
+/* Video & Main */
 .video-section { width: 100%; height: calc(85vh - 45px); background-color: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 .video-section video { width: 100%; height: 100%; object-fit: cover; }
 .overlay-image { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 50%; pointer-events: none; }
@@ -29,21 +29,29 @@ header { background-color: #111; color: #fff; display: flex; align-items: center
 .category img { width: 100%; height: 160px; object-fit: contain; padding: 10px; }
 .category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; width: 100%; }
 
-/* ---------- ORIGINAL CART OVERLAY STYLE ---------- */
+/* ---------- CART & CHECKOUT STYLES ---------- */
 #cart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 4000; display: none; }
 #cart-overlay { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 450px; background: #fff; padding: 20px; border-radius: 10px; z-index: 5000; display: none; max-height: 80vh; overflow-y: auto; flex-direction: column; }
 .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
 .cart-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; gap: 15px; }
-.cart-item img { width: 60px; height: 60px; object-fit: contain; border-radius: 5px; }
+.cart-item img { width: 60px; height: 60px; object-fit: contain; }
 .cart-item-details { flex-grow: 1; }
-.cart-item-details h4 { margin: 0; font-size: 1rem; }
-.cart-item-details p { margin: 5px 0 0; color: #555; font-size: 0.9rem; }
 .cart-summary { margin-top: 15px; padding-top: 15px; border-top: 2px solid #eee; font-weight: bold; }
 
-/* Notify & Forms */
+/* Checkout Modals */
+.checkout-step-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 500px; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 6000; display: none; max-height: 85vh; overflow-y: auto; }
+.checkout-step-modal h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; text-align: center; margin-top: 0; }
+.checkout-step-modal input { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+.choice-section { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+.choice-section label { display: block; margin-bottom: 10px; cursor: pointer; }
+.review-detail-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #eee; }
+.btn-black { background: #111; color: #fff; border: none; padding: 12px; cursor: pointer; border-radius: 5px; width: 100%; font-size: 1.1rem; margin-top: 10px; }
+.btn-green { background: #4CAF50; color: #fff; border: none; padding: 12px; cursor: pointer; border-radius: 5px; width: 100%; font-size: 1.1rem; margin-top: 15px; }
+.btn-blue { background: #007bff; color: #fff; border: none; padding: 15px; cursor: pointer; border-radius: 5px; width: 100%; font-size: 1.2rem; margin-top: 20px; }
+
+/* Notify Form */
 #notify-bar { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 2000; writing-mode: vertical-rl; text-orientation: mixed; font-weight: bold; }
 #contact-form-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 10px; padding: 2rem; box-shadow: 0 0 20px rgba(0,0,0,0.3); z-index: 3500; width: 90%; max-width: 400px; }
-.send-btn { background: #111; color: #fff; border: none; padding: 0.8rem; cursor: pointer; border-radius: 5px; width: 100%; font-weight: bold; margin-top: 10px; }
 .shop-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1500; display: none; flex-direction: column; padding: 2rem; overflow-y: auto; }
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -97,8 +105,44 @@ header { background-color: #111; color: #fff; display: flex; align-items: center
             <span>Total:</span>
             <span id="cart-total-price">0,00€</span>
         </div>
-        <button class="send-btn" style="background:#28a745;">Proceed to Checkout</button>
+        <button id="proceed-to-checkout-btn" class="btn-green" onclick="startCheckout()">Proceed to Checkout</button>
     </div>
+</div>
+
+<div id="address-modal" class="checkout-step-modal">
+    <img src="icons/close.png" style="width:18px; position:absolute; right:15px; cursor:pointer;" onclick="closeAllModals()">
+    <h3>Shipping Address</h3>
+    <form id="checkout-form-address" onsubmit="event.preventDefault(); openShippingPayment();">
+        <input type="text" placeholder="Full Name" required>
+        <input type="text" placeholder="Street & House Number" required>
+        <input type="text" placeholder="Postal Code" required>
+        <input type="text" placeholder="City" required>
+        <input type="email" placeholder="Email Address" required>
+        <button type="submit" class="btn-black">Next: Shipping & Payment</button>
+    </form>
+</div>
+
+<div id="shipping-payment-modal" class="checkout-step-modal">
+    <img src="icons/close.png" style="width:18px; position:absolute; right:15px; cursor:pointer;" onclick="closeAllModals()">
+    <h3>Shipping & Payment</h3>
+    <div class="choice-section">
+        <label><input type="radio" name="shipping" checked> <span>Standard Shipping (3-5 days) - 0,00€</span></label>
+    </div>
+    <div class="choice-section">
+        <label><input type="radio" name="payment" checked> <span>PayPal / Credit Card</span></label>
+    </div>
+    <button class="btn-black" onclick="openReview()">Next: Review Order</button>
+</div>
+
+<div id="review-modal" class="checkout-step-modal">
+    <img src="icons/close.png" style="width:18px; position:absolute; right:15px; cursor:pointer;" onclick="closeAllModals()">
+    <h3>Review Your Order</h3>
+    <div id="review-items-list"></div>
+    <div class="review-detail-row" style="font-weight:bold; border-top:2px solid #333; margin-top:10px;">
+        <span>Final Total:</span>
+        <span id="review-total-price">0,00€</span>
+    </div>
+    <button id="complete-order-btn" class="btn-blue" onclick="alert('Order placed! (Simulation)')">Buy Now</button>
 </div>
 
 <div id="notify-bar" onclick="openContact()">Notify me</div>
@@ -106,11 +150,11 @@ header { background-color: #111; color: #fff; display: flex; align-items: center
     <img src="icons/close.png" style="width:20px; cursor:pointer; margin-bottom:10px;" onclick="closeContact()">
     <h3>Stay Updated</h3>
     <form id="contactForm">
-        <input type="text" placeholder="Name" style="width:100%; margin-bottom:10px; padding:8px;" required>
-        <input type="email" placeholder="Email" style="width:100%; margin-bottom:10px; padding:8px;" required>
-        <textarea placeholder="Message" style="width:100%; margin-bottom:10px; padding:8px;" rows="4" required></textarea>
+        <input type="text" placeholder="Name" required>
+        <input type="email" placeholder="Email" required>
+        <textarea placeholder="Message" rows="4" required></textarea>
         <div class="g-recaptcha" data-sitekey="6LdRciEsAAAAAHrPpLKwHuynngZorfdUbomed_mD"></div>
-        <button type="submit" class="send-btn">Send</button>
+        <button type="submit" class="btn-black">Send</button>
     </form>
 </div>
 
@@ -152,29 +196,39 @@ function renderCart() {
     let total = 0;
     cart.forEach((item, index) => {
         total += parseFloat(item.price.replace('€','').replace(',','.'));
-        list.innerHTML += `
-            <div class="cart-item">
-                <img src="${item.img}">
-                <div class="cart-item-details">
-                    <h4>${item.name}</h4>
-                    <p>${item.price}</p>
-                </div>
-                <span onclick="cart.splice(${index},1); renderCart();" style="color:red; cursor:pointer; font-weight:bold;">X</span>
-            </div>`;
+        list.innerHTML += `<div class="cart-item"><img src="${item.img}"><div class="cart-item-details"><h4>${item.name}</h4><p>${item.price}</p></div><span onclick="cart.splice(${index},1); renderCart();" style="color:red; cursor:pointer;">X</span></div>`;
     });
     document.getElementById('cart-total-price').innerText = total.toFixed(2).replace('.', ',') + '€';
 }
 
-// Contact Form Logic
-document.getElementById('contactForm').onsubmit = function(e) {
-    e.preventDefault();
-    if (grecaptcha.getResponse() === "") {
-        alert("Please complete the Captcha.");
-    } else {
-        alert("Thank you! You will be notified.");
-        closeContact();
-    }
-};
+// Checkout Navigation Logic
+function startCheckout() {
+    if (cart.length === 0) { alert('Your cart is empty.'); return; }
+    closeCart();
+    document.getElementById('address-modal').style.display = 'block';
+    document.getElementById('cart-bg').style.display = 'block';
+}
+
+function openShippingPayment() {
+    document.getElementById('address-modal').style.display = 'none';
+    document.getElementById('shipping-payment-modal').style.display = 'block';
+}
+
+function openReview() {
+    document.getElementById('shipping-payment-modal').style.display = 'none';
+    const list = document.getElementById('review-items-list');
+    list.innerHTML = '';
+    cart.forEach(item => {
+        list.innerHTML += `<div class="review-detail-row"><span>${item.name}</span><span>${item.price}</span></div>`;
+    });
+    document.getElementById('review-total-price').innerText = document.getElementById('cart-total-price').innerText;
+    document.getElementById('review-modal').style.display = 'block';
+}
+
+function closeAllModals() {
+    document.querySelectorAll('.checkout-step-modal').forEach(m => m.style.display = 'none');
+    document.getElementById('cart-bg').style.display = 'none';
+}
 
 function openCart() { document.getElementById('cart-bg').style.display = 'block'; document.getElementById('cart-overlay').style.display = 'flex'; }
 function closeCart() { document.getElementById('cart-bg').style.display = 'none'; document.getElementById('cart-overlay').style.display = 'none'; }
