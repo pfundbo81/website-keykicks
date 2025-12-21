@@ -5,88 +5,75 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Welcome to Keykicks</title>
 <style>
-/* ---------- Header Marquee ---------- */
-.header-marquee { flex-grow: 1; overflow: hidden; white-space: nowrap; position: relative; height: 100%; display: flex; align-items: center; margin: 0 20px; }
-.marquee-text { display: inline-block; padding-left: 100%; color: #fff; font-size: 0.85rem; letter-spacing: 1px; animation: marqueeScroll 12s linear infinite; }
-@keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
 /* ---------- Global Styles ---------- */
-body { margin: 0; font-family: Arial, sans-serif; background-color: #fff; color: #222; overflow-x: hidden; }
-p { margin: 70px auto; padding: 0 135px; font-family: 'Roboto', sans-serif; font-size: 20px; line-height: 1.4; max-width: 1000px; }
+body { margin: 0; font-family: 'Arial', sans-serif; background-color: #fff; color: #222; overflow-x: hidden; padding-top: 40px; }
+p.intro-text { margin: 70px auto; padding: 0 20px; font-size: 20px; line-height: 1.4; max-width: 800px; text-align: center; }
 
-header { background-color: #111; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; height: 40px; width: 100%; box-sizing: border-box; position: relative; z-index: 1000; }
-.header-left, .header-right { display: flex; align-items: center; gap: 10px; height: 100%; }
-
-.header-left a img { width: 20px; height: 20px; filter: invert(1); transition: opacity 0.3s; cursor: pointer; user-select: none; display: block; }
-.header-left a img:hover { opacity: 0.7; }
-
-.search-bar { display: flex; align-items: center; margin: 0; height: 26px; }
-.search-bar input[type="text"] { padding: 0 8px; border-radius: 4px 0 0 4px; border: none; outline: none; font-size: 0.85rem; height: 100%; width: 120px; }
-.search-bar button { background-color: #fff; color: #111; border: none; padding: 0 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; transition: background 0.3s; font-size: 0.85rem; height: 100%; }
-.search-bar button:hover { background-color: #ddd; }
-
-.video-section { width: 100%; height: calc(85vh - 45px); background-color: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-.video-section video { width: 100%; height: 100%; object-fit: cover; }
-.overlay-image { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 50%; height: auto; pointer-events: none; }
-
-main { padding: 2rem; max-width: 1000px; margin: 0 auto; }
-.scroll-down { text-align: center; cursor: pointer; margin-top: -1rem; margin-bottom: 1rem; }
-.scroll-down img { width: 60px; height: auto; animation: bounce 1.5s infinite; opacity: 0.9; }
-@keyframes bounce { 0%,20%,50%,80%,100% { transform: translateY(0); } 40% { transform: translateY(10px); } 60% { transform: translateY(5px); } }
-
-.categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 50px; }
-.category { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; text-decoration: none; color: inherit; cursor:pointer; display:flex; flex-direction:column; align-items:center; transition: transform 0.3s ease; }
-.category:hover { transform: translateY(-5px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
-.category img { width: 100%; height: 180px; object-fit: contain; padding: 5px; }
-.category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; width:100%; }
-
-/* ---------- KORREKTUR: NOTIFY / CONTACT OVERLAY ---------- */
-#contact-form-overlay { 
-    display: none; 
+/* ---------- Header & Lauftext ---------- */
+header { 
+    background-color: #111; 
+    color: #fff; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 0 15px; 
+    height: 40px; 
+    width: 100%; 
+    box-sizing: border-box; 
     position: fixed; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    background: #fff; 
-    border-radius: 10px; 
-    padding: 3rem 2rem 2rem 2rem; 
-    box-shadow: 0 0 20px rgba(0,0,0,0.3); 
-    z-index: 3500; 
-    width: 90%; 
-    max-width: 400px; 
+    top: 0; 
+    z-index: 2000; 
 }
-.close-contact { 
-    position: absolute; 
-    top: 15px; 
-    left: 15px; 
-    cursor: pointer; 
-    width: 18px; 
-    height: 18px; 
-    z-index: 3600; 
-}
-.close-contact img { width: 100%; height: 100%; display: block; }
-#notify-bar { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 2000; writing-mode: vertical-rl; text-orientation: mixed; font-weight: bold; border-radius: 5px 0 0 5px; }
+.header-left, .header-right { display: flex; align-items: center; gap: 10px; height: 100%; }
+.header-left a img { width: 20px; height: 20px; filter: invert(1); cursor: pointer; display: block; }
 
-/* ---------- Shop & Product Popups ---------- */
-.shop-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: none; flex-direction: column; overflow-y: auto; z-index: 1000; padding: 2rem; box-sizing: border-box; }
-.shop-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
-.item { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); padding-bottom: 10px; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-.item img { width: 100%; height: 150px; object-fit: contain; }
+.header-marquee { flex-grow: 1; overflow: hidden; white-space: nowrap; height: 100%; display: flex; align-items: center; margin: 0 20px; position: relative; }
+.marquee-text { display: inline-block; white-space: nowrap; color: #fff; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; animation: marqueeScroll 15s linear infinite; }
+@keyframes marqueeScroll { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+
+.search-bar { display: flex; align-items: center; height: 26px; }
+.search-bar input { padding: 0 8px; border-radius: 4px 0 0 4px; border: none; outline: none; font-size: 0.85rem; height: 100%; width: 100px; }
+.search-bar button { background-color: #fff; color: #111; border: none; padding: 0 10px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; font-size: 0.85rem; height: 100%; }
+
+/* ---------- Hero Section ---------- */
+.video-section { width: 100%; height: calc(85vh - 40px); background-color: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+.video-section video { width: 100%; height: 100%; object-fit: cover; }
+.overlay-image { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 50%; pointer-events: none; }
+
+/* ---------- Categories ---------- */
+main { padding: 2rem; max-width: 1000px; margin: 0 auto; }
+.categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+.category { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s; }
+.category:hover { transform: translateY(-5px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+.category img { width: 100%; height: 180px; object-fit: contain; padding: 10px; box-sizing: border-box; }
+.category-title { text-align: center; padding: 1rem; background-color: #111; color: #fff; width: 100%; font-weight: bold; }
+
+/* ---------- Notify Form (FIXED) ---------- */
+#notify-bar { position: fixed; top: 50%; right: 0; transform: translateY(-50%); background: #111; color: #fff; padding: 1rem; cursor: pointer; z-index: 1500; writing-mode: vertical-rl; text-orientation: mixed; font-weight: bold; border-radius: 5px 0 0 5px; }
+#contact-form-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 12px; padding: 3rem 2rem 2rem 2rem; box-shadow: 0 0 30px rgba(0,0,0,0.4); z-index: 4000; width: 90%; max-width: 400px; }
+.close-contact { position: absolute; top: 15px; left: 15px; cursor: pointer; width: 18px; height: 18px; z-index: 4100; }
+.close-contact img { width: 100%; height: 100%; display: block; }
+#contactForm input, #contactForm textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-family: inherit; }
+
+/* ---------- Shop Overlay ---------- */
+.shop-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: none; flex-direction: column; overflow-y: auto; z-index: 3000; padding: 4rem 2rem 2rem 2rem; box-sizing: border-box; }
+.shop-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto; width: 100%; }
+.item { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); padding: 15px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.item img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 10px; }
+.item button { background: #111; color: #fff; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
 
 /* ---------- Footer ---------- */
-footer { padding: 2rem; max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
-footer .links a { color: #111; text-decoration: none; font-weight: bold; margin-right: 15px; }
-footer .copyright { color: #777; font-size: 0.9rem; margin-top: 10px; }
+footer { background-color: #f9f9f9; padding: 3rem 1rem; border-top: 1px solid #eee; margin-top: 50px; }
+.footer-container { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+.footer-section h4 { margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; }
+.footer-section ul { list-style: none; padding: 0; margin: 0; }
+.footer-section ul li { margin-bottom: 0.5rem; }
+.footer-section ul li a { color: #555; text-decoration: none; font-size: 0.9rem; }
+.footer-bottom { max-width: 1000px; margin: 2rem auto 0 auto; padding-top: 1.5rem; border-top: 1px solid #eee; display: flex; justify-content: space-between; font-size: 0.85rem; color: #888; }
 
-/* ---------- Modals (Cart, Checkout, etc.) ---------- */
-.checkout-step-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 500px; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.4); z-index: 5000; display: none; }
-#cart-overlay { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 450px; background: #fff; padding: 20px; border-radius: 10px; z-index: 5000; display: none; flex-direction: column; max-height: 80vh; overflow-y: auto; }
-#cart-bg, #popup-bg, #cookie-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2500; display: none; }
-
-@media (max-width: 640px) {
-    p { padding: 0 20px; font-size: 16px; }
-    .header-marquee { display: none; }
-}
+/* ---------- Cart ---------- */
+#cart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3500; display: none; }
+#cart-overlay { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 400px; background: #fff; padding: 20px; border-radius: 10px; z-index: 3600; display: none; flex-direction: column; }
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
@@ -97,48 +84,48 @@ footer .copyright { color: #777; font-size: 0.9rem; margin-top: 10px; }
         <a href="#" onclick="openCart(); return false;"><img src="icons/shopping-cart.png" alt="Cart"></a>
     </div>
     <div class="header-marquee">
-        <div class="marquee-text">This Site is under development. No orders possible. Please click the "Notify me button" to stay updated.</div>
+        <div class="marquee-text">This Site is under development. No orders possible. Please click the "Notify me button" to stay updated. ++ New Drops coming soon ++ Style your Keys!</div>
     </div>
     <div class="header-right">
         <form class="search-bar" id="searchForm">
-            <input type="text" id="searchInput" placeholder="Search article..." required>
-            <button type="submit">Search</button>
+            <input type="text" id="searchInput" placeholder="Search..." required>
+            <button type="submit">Go</button>
         </form>
     </div>
 </header>
 
 <section class="video-section">
-    <video autoplay muted loop><source src="test2.mp4" type="video/mp4"></video>
+    <video autoplay muted loop playsinline><source src="test2.mp4" type="video/mp4"></video>
     <img src="keykickslogowhite.png" alt="Logo" class="overlay-image">
 </section>
 
 <main>
-    <div class="scroll-down" onclick="scrollToEnd()"><img src="icons/arrow.png" alt="Scroll"></div>
-    <p><b>Keykicks</b> fills the niche of stylish keychains created with a love for detail... <b>Grab your daily eye-catcher!</b></p>
+    <p class="intro-text"><b>Keykicks</b> fills the niche of stylish keychains created with a love for detail... <b>Grab your daily eye-catcher!</b></p>
     <div class="categories">
-        <div class="category" id="open-sneaker"><img src="icons/sneakers.png"><div class="category-title">Sneaker</div></div>
-        <div class="category" id="open-comic"><img src="icons/theater.png"><div class="category-title">Comic</div></div>
-        <div class="category" id="open-other"><img src="icons/others.png"><div class="category-title">Other</div></div>
+        <div class="category" onclick="openShop('sneaker')"><img src="icons/sneakers.png"><div class="category-title">Sneaker</div></div>
+        <div class="category" onclick="openShop('comic')"><img src="icons/theater.png"><div class="category-title">Comic</div></div>
+        <div class="category" onclick="openShop('other')"><img src="icons/others.png"><div class="category-title">Other</div></div>
     </div>
 </main>
 
 <div id="notify-bar">Notify me</div>
+
 <div id="contact-form-overlay">
-    <div class="close-contact" onclick="closeContactForm()"><img src="icons/close.png"></div>
-    <h3>Contact Us</h3>
+    <div class="close-contact" onclick="closeContactForm()"><img src="icons/close.png" alt="X"></div>
+    <h3 style="margin-top:0;">Stay Updated</h3>
     <form id="contactForm">
-        <input type="text" name="name" placeholder="Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="message" rows="4" placeholder="Message" required></textarea>
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
         <div class="g-recaptcha" data-sitekey="6LdRciEsAAAAAHrPpLKwHuynngZorfdUbomed_mD"></div>
-        <button type="submit" style="background:#111; color:white; padding:12px; border:none; border-radius:5px; cursor:pointer; width:100%;">Send</button>
+        <button type="submit" style="background:#111; color:white; padding:12px; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:10px; font-weight:bold;">Send Message</button>
     </form>
-    <div id="form-response" style="margin-top:10px; text-align:center; font-weight:bold;"></div>
+    <div id="form-response" style="margin-top:15px; text-align:center; font-weight:bold; font-size:0.9rem;"></div>
 </div>
 
 <div id="shop-overlay" class="shop-overlay">
-    <img src="icons/close.png" class="close-btn" style="width:25px; cursor:pointer;" onclick="closeShop()">
-    <h2 id="shop-title" style="text-align:center;">Shop</h2>
+    <img src="icons/close.png" style="width:20px; cursor:pointer; position:absolute; top:20px; left:20px;" onclick="closeShop()">
+    <h2 id="shop-title" style="text-align:center; margin-bottom:2rem;">Shop</h2>
     <div id="sneaker-items" class="shop-content"></div>
     <div id="comic-items" class="shop-content"></div>
     <div id="other-items" class="shop-content"></div>
@@ -146,88 +133,116 @@ footer .copyright { color: #777; font-size: 0.9rem; margin-top: 10px; }
 
 <div id="cart-bg" onclick="closeCart()"></div>
 <div id="cart-overlay">
-    <h3>Shopping Cart</h3>
-    <div id="cart-items-container"></div>
-    <div class="cart-summary"><p>Subtotal: <span id="cart-total">€0.00</span></p></div>
-    <button class="checkout-btn" id="proceed-to-checkout-btn" style="width:100%; background:#4CAF50; color:white; padding:10px; border:none; cursor:pointer;">Proceed to Checkout</button>
+    <h3>Your Cart</h3>
+    <div id="cart-items-container" style="margin-bottom:15px;">Your cart is empty.</div>
+    <button style="width:100%; background:#4CAF50; color:white; padding:12px; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Checkout (Soon)</button>
 </div>
 
 <footer>
-    <div class="links">
-        <a href="AGB.html">Terms</a>
-        <a href="privacy.html">Privacy</a>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Support</h4>
+            <ul>
+                <li><a href="AGB.html">Terms & Conditions</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="imprint.html">Imprint</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Shop</h4>
+            <ul>
+                <li><a href="#" onclick="openShop('sneaker'); return false;">Sneaker</a></li>
+                <li><a href="#" onclick="openShop('comic'); return false;">Comic</a></li>
+                <li><a href="#" onclick="openShop('other'); return false;">Other</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <ul>
+                <li><a href="mailto:sendkeykicks@gmail.com">Email Us</a></li>
+                <li><a href="#" onclick="document.getElementById('notify-bar').click(); return false;">Notify Me</a></li>
+            </ul>
+        </div>
     </div>
-    <div class="copyright">© 2025 Keykicks – All Rights Reserved.</div>
+    <div class="footer-bottom">
+        <div>© 2025 Keykicks – All Rights Reserved.</div>
+    </div>
 </footer>
 
 <script>
-/* ---------- Global Variables ---------- */
-let allProductsData = { sneaker: [], comic: [], other: [] };
-let cart = JSON.parse(localStorage.getItem('keykicksCart')) || [];
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRCn2c0ZltX-sU9mipIwZEX_0tPzevLLRpRfQ55RzxBLo8ZL14OxHnbMexCuOESjdO/exec';
+let allProducts = { sneaker: [], comic: [], other: [] };
+let cart = [];
 
-/* ---------- Load Products ---------- */
+// Load Products
 async function loadProducts() {
     try {
         const res = await fetch('https://raw.githubusercontent.com/pfundbo81/website-keykicks/main/products.json');
-        const data = await res.json();
-        allProductsData = data;
-        renderAll();
-    } catch(e) { console.error("Load failed", e); }
+        allProducts = await res.json();
+    } catch (e) { console.error("Error loading products", e); }
 }
 
-function renderAll() {
-    ['sneaker','comic','other'].forEach(cat => {
-        const cont = document.getElementById(cat + '-items');
-        if(!cont) return;
-        cont.innerHTML = '';
-        (allProductsData[cat] || []).forEach((p, i) => {
-            const div = document.createElement('div');
-            div.className = 'item';
-            div.innerHTML = `<img src="${p.image}"><b>${p.name}</b><p>${p.price}</p><button onclick="addToCart('${cat}', ${i})">Add</button>`;
-            cont.appendChild(div);
-        });
+// Shop Logic
+function openShop(cat) {
+    const cont = document.getElementById(cat + '-items');
+    document.getElementById('shop-overlay').style.display = 'flex';
+    ['sneaker','comic','other'].forEach(c => document.getElementById(c + '-items').style.display = (c === cat ? 'grid' : 'none'));
+    document.getElementById('shop-title').textContent = cat.toUpperCase() + " COLLECTION";
+    
+    cont.innerHTML = '';
+    (allProducts[cat] || []).forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `<img src="${p.image}"><b>${p.name}</b><p>${p.price}</p><button onclick="addToCart('${p.name}')">Add to Cart</button>`;
+        cont.appendChild(div);
     });
 }
+function closeShop() { document.getElementById('shop-overlay').style.display = 'none'; }
 
-function addToCart(cat, index) {
-    const p = allProductsData[cat][index];
-    cart.push(p);
-    localStorage.setItem('keykicksCart', JSON.stringify(cart));
-    openCart();
-}
-
+// Cart Logic
+function addToCart(name) { cart.push(name); alert(name + " added to cart!"); }
 function openCart() { 
     document.getElementById('cart-bg').style.display='block'; 
     document.getElementById('cart-overlay').style.display='flex'; 
     const cont = document.getElementById('cart-items-container');
-    cont.innerHTML = cart.map(i => `<div>${i.name} - ${i.price}</div>`).join('');
+    cont.innerHTML = cart.length > 0 ? cart.map(i => `<div>• ${i}</div>`).join('') : 'Your cart is empty.';
 }
-function closeCart() { document.getElementById('cart-bg').style.display='none'; document.getElementById('cart-overlay').style.display='none'; }
-
-function openShop(cat) {
-    document.getElementById('shop-overlay').style.display='flex';
-    ['sneaker','comic','other'].forEach(c => document.getElementById(c + '-items').style.display = (c === cat ? 'grid' : 'none'));
+function closeCart() { 
+    document.getElementById('cart-bg').style.display='none'; 
+    document.getElementById('cart-overlay').style.display='none'; 
+    document.getElementById('contact-form-overlay').style.display='none';
 }
-function closeShop() { document.getElementById('shop-overlay').style.display='none'; }
 
-/* ---------- GOOGLE SCRIPT NOTIFY LOGIC ---------- */
+// Notify Form Logic
+document.getElementById('notify-bar').onclick = () => { 
+    document.getElementById('contact-form-overlay').style.display='block'; 
+    document.getElementById('cart-bg').style.display='block'; 
+};
+function closeContactForm() { 
+    document.getElementById('contact-form-overlay').style.display='none'; 
+    document.getElementById('cart-bg').style.display='none'; 
+}
+
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const responseField = document.getElementById('form-response');
-    
+    const submitBtn = this.querySelector('button');
     const recaptcha = grecaptcha.getResponse();
+
     if (!recaptcha) {
         responseField.style.color = 'red';
-        responseField.textContent = 'Please complete the reCAPTCHA.';
+        responseField.textContent = 'Please solve the reCAPTCHA.';
         return;
     }
 
     responseField.style.color = 'orange';
-    responseField.textContent = 'Sending...';
+    responseField.textContent = 'Sending message...';
+    submitBtn.disabled = true;
 
     const formData = new FormData(this);
-    const params = new URLSearchParams(formData);
+    const params = new URLSearchParams();
+    formData.forEach((value, key) => params.append(key, value));
+    params.append('g-recaptcha-response', recaptcha);
 
     fetch(SCRIPT_URL, {
         method: 'POST',
@@ -244,16 +259,9 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     .catch(() => {
         responseField.style.color = 'red';
         responseField.textContent = 'Error. Please try again.';
-    });
+    })
+    .finally(() => { submitBtn.disabled = false; });
 });
-
-document.getElementById('notify-bar').onclick = () => { document.getElementById('contact-form-overlay').style.display='block'; document.getElementById('cart-bg').style.display='block'; };
-function closeContactForm() { document.getElementById('contact-form-overlay').style.display='none'; document.getElementById('cart-bg').style.display='none'; }
-function scrollToEnd() { window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); }
-
-document.getElementById('open-sneaker').onclick = () => openShop('sneaker');
-document.getElementById('open-comic').onclick = () => openShop('comic');
-document.getElementById('open-other').onclick = () => openShop('other');
 
 window.onload = loadProducts;
 </script>
