@@ -138,6 +138,7 @@ footer { background-color: #f9f9f9; padding: 3rem 1rem; border-top: 1px solid #e
     <div id="sneaker-items" class="shop-content"></div>
     <div id="comic-items" class="shop-content"></div>
     <div id="other-items" class="shop-content"></div>
+    <div id="search-items" class="shop-content"></div>
 </div>
 
 <div id="cart-bg" onclick="closeCart()"></div>
@@ -205,18 +206,44 @@ function scrollToSneakers() {
 function openShop(cat) {
     const cont = document.getElementById(cat + '-items');
     document.getElementById('shop-overlay').style.display = 'flex';
-    ['sneaker','comic','other'].forEach(c => document.getElementById(c + '-items').style.display = (c === cat ? 'grid' : 'none'));
-    document.getElementById('shop-title').textContent = cat.toUpperCase() + " COLLECTION";
-    
-    cont.innerHTML = '';
-    (allProducts[cat] || []).forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'item';
-        div.innerHTML = `<img src="${p.image}"><b>${p.name}</b><p>${p.price}</p><button onclick="addToCart('${p.name}')">Add to Cart</button>`;
-        cont.appendChild(div);
+    ['sneaker','comic','other','search'].forEach(c => {
+        const el = document.getElementById(c + '-items');
+        if(el) el.style.display = (c === cat ? 'grid' : 'none');
     });
+    document.getElementById('shop-title').textContent = cat === 'search' ? "SEARCH RESULTS" : cat.toUpperCase() + " COLLECTION";
+    
+    if(cat !== 'search') {
+        cont.innerHTML = '';
+        (allProducts[cat] || []).forEach(p => {
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.innerHTML = `<img src="${p.image}"><b>${p.name}</b><p>${p.price}</p><button onclick="addToCart('${p.name}')">Add to Cart</button>`;
+            cont.appendChild(div);
+        });
+    }
 }
 function closeShop() { document.getElementById('shop-overlay').style.display = 'none'; }
+
+// SEARCH LOGIC
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const resultsCont = document.getElementById('search-items');
+    let found = [];
+
+    ['sneaker', 'comic', 'other'].forEach(cat => {
+        (allProducts[cat] || []).forEach(p => {
+            if(p.name.toLowerCase().includes(query)) {
+                found.push(p);
+            }
+        });
+    });
+
+    openShop('search');
+    resultsCont.innerHTML = found.length > 0 
+        ? found.map(p => `<div class="item"><img src="${p.image}"><b>${p.name}</b><p>${p.price}</p><button onclick="addToCart('${p.name}')">Add to Cart</button></div>`).join('')
+        : '<p style="grid-column: 1/-1; text-align:center;">No products found.</p>';
+});
 
 // Cart Logic
 function addToCart(name) { cart.push(name); alert(name + " added to cart!"); }
